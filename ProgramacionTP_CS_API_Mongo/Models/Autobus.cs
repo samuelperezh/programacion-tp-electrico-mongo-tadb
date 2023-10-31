@@ -8,11 +8,11 @@ namespace ProgramacionTP_CS_API_Mongo.Models
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
-        [JsonPropertyName("Id")]
+        [JsonPropertyName("id")]
         public string? Id { get; set; } = string.Empty;
 
-        [BsonElement("Nombre_autobus")]
-        [JsonPropertyName("Nombre_autobus")]
+        [BsonElement("nombre_autobus")]
+        [JsonPropertyName("nombre_autobus")]
         [BsonRepresentation(BsonType.String)]
         public string Nombre_autobus { get; set; } = string.Empty;
 

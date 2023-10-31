@@ -6,19 +6,19 @@ namespace ProgramacionTP_CS_API_Mongo.Models
 {
     public class OperacionAutobus
     {
-        [BsonElement("Autobus_id")]
-        [JsonPropertyName("Autobus_id")]
+        [BsonElement("autobus_id")]
+        [JsonPropertyName("autobus_id")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         [BsonRepresentation(BsonType.ObjectId)]
         public string? Autobus_id { get; set; } = null;
 
-        [BsonElement("Nombre_autobus")]
-        [JsonPropertyName("Nombre_autobus")]
+        [BsonElement("nombre_autobus")]
+        [JsonPropertyName("nombre_autobus")]
         [BsonRepresentation(BsonType.String)]
         public string Nombre_autobus { get; set; } = string.Empty;
 
-        [BsonElement("Horario_id")]
-        [JsonPropertyName("Horario_id")]
+        [BsonElement("horario_id")]
+        [JsonPropertyName("horario_id")]
         [BsonRepresentation(BsonType.Int64)]
 
          public int Horario_id { get; set; } = 0;

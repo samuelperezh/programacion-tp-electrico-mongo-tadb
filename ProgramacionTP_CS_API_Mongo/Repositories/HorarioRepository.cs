@@ -5,11 +5,7 @@ using MongoDB.Driver;
 
 namespace ProgramacionTP_CS_API_Mongo.Repositories
 {
-    public class HorarioRepository
-    {
-        namespace ProgramacionTP_CS_API_PostgreSQL_Dapper.Repositories
-    {
-        public class HorarioRepository : IHorarioRepository
+    public class HorarioRepository : IHorarioRepository
         {
             private readonly MongoDbContext contextoDB;
 
@@ -17,5 +13,38 @@ namespace ProgramacionTP_CS_API_Mongo.Repositories
             {
                 contextoDB = unContexto;
             }
+            public async Task<IEnumerable<Horario>> GetAllAsync()
+            {
+                var conexion = contextoDB.CreateConnection();
+                var coleccionHorarios = conexion.GetCollection<Horario>(contextoDB.configuracionColecciones.ColeccionHorarios);
+
+                var losHorarios = await coleccionHorarios
+                    .Find(_ => true)
+                    .SortBy(Horario => Horario.Horario_pico)
+                    .ToListAsync();
+
+                return losHorarios;
+            }
+
+            public async Task<Horario> GetByIdAsync(int horario_id)
+            {
+                Horario unHorario = new();
+
+                var conexion = contextoDB.CreateConnection();
+                var coleccionHorarios = conexion.GetCollection<Horario>(contextoDB.configuracionColecciones.ColeccionHorarios);
+
+                var resultado = await coleccionHorarios
+                    .Find(Horario => Horario.Id == horario_id)
+                    .FirstOrDefaultAsync();
+
+                if (resultado is not null)
+                    unHorario = resultado;
+
+                return unHorario;
+            }
         }
+
+    
 }
+
+
