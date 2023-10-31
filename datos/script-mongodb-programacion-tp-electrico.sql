@@ -43,7 +43,6 @@ db.createCollection("utilizacion_cargadores");
 db.createCollection("operacion_autobuses");
 
 -- Creamos las colecciones usando un json schema para validación
-// Colección: Cargadores
 db.createCollection("cargadores", {
    validator: {
       $jsonSchema: {
@@ -60,7 +59,6 @@ db.createCollection("cargadores", {
    }
 });
 
-// Colección: Autobuses
 db.createCollection("autobuses", {
    validator: {
       $jsonSchema: {
@@ -77,7 +75,6 @@ db.createCollection("autobuses", {
    }
 });
 
-// Colección: Horarios
 db.createCollection("horarios", {
    validator: {
       $jsonSchema: {
@@ -90,7 +87,6 @@ db.createCollection("horarios", {
                description: "'id' Debe ser un número entero y no puede ser nulo"
             },
             horario_pico: {
-               bsonType: "bool",
                description: "'horario_pico' Debe ser un valor booleano (true o false) y no puede ser nulo"
             }
          }
@@ -98,7 +94,6 @@ db.createCollection("horarios", {
    }
 });
 
-// Colección: Utilización de Cargadores
 db.createCollection("utilizacion_cargadores", {
    validator: {
       $jsonSchema: {
@@ -123,7 +118,6 @@ db.createCollection("utilizacion_cargadores", {
    }
 });
 
-// Colección: Operación de Autobuses
 db.createCollection("operacion_autobuses", {
    validator: {
       $jsonSchema: {
@@ -143,7 +137,6 @@ db.createCollection("operacion_autobuses", {
       }
    }
 });
-
 
 -- ***************************************************
 -- Consultas de apoyo para implementar el repositorio
