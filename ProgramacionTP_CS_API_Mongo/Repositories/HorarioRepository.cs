@@ -20,7 +20,7 @@ namespace ProgramacionTP_CS_API_Mongo.Repositories
 
                 var losHorarios = await coleccionHorarios
                     .Find(_ => true)
-                    .SortBy(Horario => Horario.Horario_pico)
+                    .SortBy(horario => horario.Horario_pico)
                     .ToListAsync();
 
                 return losHorarios;
