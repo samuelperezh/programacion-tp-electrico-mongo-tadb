@@ -7,7 +7,7 @@ using ProgramacionTP_CS_API_Mongo.Models;
 using System.Data;
 
 namespace ProgramacionTP_CS_API_Mongo.Repositories
-{ 
+{
     public class OperacionAutobusRepository : IOperacionAutobusRepository
     {
         private readonly MongoDbContext contextoDB;
@@ -17,21 +17,21 @@ namespace ProgramacionTP_CS_API_Mongo.Repositories
             contextoDB = unContexto;
         }
 
-    public async Task<IEnumerable<OperacionAutobus>> GetAllAsync()
+        public async Task<IEnumerable<OperacionAutobus>> GetAllAsync()
         {
             var conexion = contextoDB.CreateConnection();
             var coleccionOperacionAutobuses = conexion.GetCollection<OperacionAutobus>(contextoDB.configuracionColecciones.ColeccionOperacionAutobuses);
 
             var lasOperaciones = await coleccionOperacionAutobuses
             .Find(_ => true)
-            .SortBy(operacion => operacion.Autobus_id)
+            .SortBy(operacion => operacion.Codigo_autobus)
             .ThenBy(operacion => operacion.Horario_id)
             .ToListAsync();
             ;
-                return lasOperaciones;
-            }
+            return lasOperaciones;
         }
-        public async Task<OperacionAutobus> GetByOperationAsync(string? autobus_id, string? horario_id)
+
+        public async Task<OperacionAutobus> GetByOperationAsync(int codigo_autobus, int horario_id)
         {
             OperacionAutobus unaOperacionAutobus = new OperacionAutobus();
 
@@ -39,7 +39,7 @@ namespace ProgramacionTP_CS_API_Mongo.Repositories
             var coleccionOperacionAutobuses = conexion.GetCollection<OperacionAutobus>(contextoDB.configuracionColecciones.ColeccionOperacionAutobuses); ;
 
             var resultado = await coleccionOperacionAutobuses
-                .Find(operacion => operacion.Autobus_id == autobus_id && operacion.Horario_id == horario_id)
+                .Find(operacion => operacion.Codigo_autobus == codigo_autobus && operacion.Horario_id == horario_id)
                 .FirstOrDefaultAsync();
 
             if (resultado is not null)
@@ -48,75 +48,64 @@ namespace ProgramacionTP_CS_API_Mongo.Repositories
             return unaOperacionAutobus;
         }
 
-    public async Task<string> GetAutobusStateAsync(string horario_id, string autobus_id, BsonJavaScript bsonJavaScript)
-    {
-        string estado;
-        var conexion = contextoDB.CreateConnection();
-        var coleccionOperacionAutobuses = conexion.GetCollection<OperacionAutobus>(contextoDB.configuracionColecciones.ColeccionOperacionAutobuses); ;
-
-        var filter = Builders<OperacionAutobus>.Filter.And(
-            Builders<OperacionAutobus>.Filter.Eq("horario_id", horario_id),
-            Builders<OperacionAutobus>.Filter.Eq("autobus_id", autobus_id)
-        );
-
-        //Preguntarle al profesor 
-        var projection = Builders<OperacionAutobus>.Projection.Expression<string>(
-         new BsonJavaScript(
-             "if (this.Horario_id == " + horario_id + " && this.Autobus_id == " + autobus_id + ") { 'Operando' } else { 'Parqueado' }"
-         ));
-
-        var result = await coleccionOperacionAutobuses.Find(filter)
-            .Project(projection)
-            .FirstOrDefaultAsync();
-
-        if (result != null)
+        public async Task<string> GetAutobusStateAsync(int horario_id, int codigo_autobus)
         {
-            estado = result.ToString();
-        }
-        else
-        {
-            estado = "No encontrado";
-        }
-
-        return estado;
-    }
-
-
-public async Task<bool> CreateAsync(OperacionAutobus unaOperacionAutobus)
-        {
-            bool resultadoAccion = false;
-            
             var conexion = contextoDB.CreateConnection();
             var coleccionOperacionAutobuses = conexion.GetCollection<OperacionAutobus>(contextoDB.configuracionColecciones.ColeccionOperacionAutobuses);
 
-            await coleccionOperacionAutobuses.InsertOneAsync(unaOperacionAutobus);
-
-            var resultado = await GetByOperationAsync(unaOperacionAutobus.Autobus_id, unaOperacionAutobus.Horario_id)
-        if (resultado is not null)
-            resultadoAccion = resultado;
-            try
+            var pipeline = new BsonDocument[]
             {
-                using (var conexion = contextoDB.CreateConnection())
+        new BsonDocument("$match", new BsonDocument
+        {
+            { "horario_id", horario_id },
+            { "codigo_autobus", codigo_autobus }
+        }),
+        new BsonDocument("$group", new BsonDocument
+        {
+            { "_id", null },
+            { "count", new BsonDocument("$sum", 1) }
+        })
+            };
+
+            var aggregationCursor = await coleccionOperacionAutobuses.Aggregate<BsonDocument>(pipeline)
+                .ToListAsync();
+
+            string estado = "No encontrado";
+
+            if (aggregationCursor.Count > 0)
+            {
+                int count = aggregationCursor[0]["count"].AsInt32;
+                if (count > 0)
                 {
-                    string procedimiento = "p_inserta_operacion_autobus";
-                    var parametros = new
-                    {
-                        p_autobus_id = unaOperacionAutobus.Autobus_id,
-                        p_horario_id = unaOperacionAutobus.Horario_id
-                    };
-
-                    var cantidad_filas = await conexion.ExecuteAsync(
-                        procedimiento,
-                        parametros,
-                        commandType: CommandType.StoredProcedure);
-
-                    if (cantidad_filas != 0)
-                        resultadoAccion = true;
+                    estado = "Operando";
+                }
+                else
+                {
+                    // Si count es 0, el autobús está parqueado.
+                    estado = "Parqueado";
                 }
             }
-            catch (NpgsqlException error)
+
+            return estado;
+        }
+
+     public async Task<bool> CreateAsync(OperacionAutobus unaOperacionAutobus)
+        {
+            bool resultadoAccion = false;
+
+            if (unaOperacionAutobus.Codigo_autobus != 0)
             {
-                throw new DbOperationException(error.Message);
+                var conexion = contextoDB.CreateConnection();
+                var coleccionOperacionAutobuses = conexion.GetCollection<OperacionAutobus>(contextoDB.configuracionColecciones.ColeccionOperacionAutobuses);
+
+                await coleccionOperacionAutobuses.InsertOneAsync(unaOperacionAutobus);
+
+                var resultado = await GetByOperationAsync(unaOperacionAutobus.Codigo_autobus, unaOperacionAutobus.Horario_id);
+
+                if (resultado is not null)
+                {
+                    resultadoAccion = true;
+                }
             }
 
             return resultadoAccion;
@@ -126,30 +115,14 @@ public async Task<bool> CreateAsync(OperacionAutobus unaOperacionAutobus)
         {
             bool resultadoAccion = false;
 
-            try
-            {
-                using (var conexion = contextoDB.CreateConnection())
-                {
-                    string procedimiento = "p_actualiza_operacion_autobus";
-                    var parametros = new
-                    {
-                        p_autobus_id = unaOperacionAutobus.Autobus_id,
-                        p_horario_id = unaOperacionAutobus.Horario_id
-                    };
-
-                    var cantidad_filas = await conexion.ExecuteAsync(
-                        procedimiento,
-                        parametros,
-                        commandType: CommandType.StoredProcedure);
-
-                    if (cantidad_filas != 0)
-                        resultadoAccion = true;
-                }
-            }
-            catch (NpgsqlException error)
-            {
-                throw new DbOperationException(error.Message);
-            }
+            var conexion = contextoDB.CreateConnection();
+            var coleccionOperacionAutobuses = conexion.GetCollection<OperacionAutobus>(contextoDB.configuracionColecciones.ColeccionOperacionAutobuses);
+            
+            var resultado = await coleccionOperacionAutobuses.ReplaceOneAsync(
+                               operacion => operacion.Codigo_autobus == unaOperacionAutobus.Codigo_autobus && operacion.Horario_id == unaOperacionAutobus.Horario_id,
+                                              unaOperacionAutobus);
+            if (resultado.IsAcknowledged)
+                resultadoAccion = true;
 
             return resultadoAccion;
         }
@@ -158,30 +131,14 @@ public async Task<bool> CreateAsync(OperacionAutobus unaOperacionAutobus)
         {
             bool resultadoAccion = false;
 
-            try
-            {
-                using (var conexion = contextoDB.CreateConnection())
-                {
-                    string procedimiento = "p_elimina_operacion_autobus";
-                    var parametros = new
-                    {
-                        p_autobus_id = unaOperacionAutobus.Autobus_id,
-                        p_horario_id = unaOperacionAutobus.Horario_id
-                    };
+            var conexion = contextoDB.CreateConnection();
+            var coleccionOperacionAutobuses = conexion.GetCollection<OperacionAutobus>(contextoDB.configuracionColecciones.ColeccionOperacionAutobuses);
 
-                    var cantidad_filas = await conexion.ExecuteAsync(
-                        procedimiento,
-                        parametros,
-                        commandType: CommandType.StoredProcedure);
+            var resultado = await coleccionOperacionAutobuses.DeleteOneAsync(
+                               operacion => operacion.Codigo_autobus == unaOperacionAutobus.Codigo_autobus && operacion.Horario_id == unaOperacionAutobus.Horario_id);
 
-                    if (cantidad_filas != 0)
-                        resultadoAccion = true;
-                }
-            }
-            catch (NpgsqlException error)
-            {
-                throw new DbOperationException(error.Message);
-            }
+            if (resultado.IsAcknowledged)
+                resultadoAccion = true;
 
             return resultadoAccion;
         }
