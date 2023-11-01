@@ -6,6 +6,11 @@ namespace ProgramacionTP_CS_API_Mongo.Models
 {
     public class Horario
     {
+        [BsonId]
+        [BsonRepresentation(BsonType.ObjectId)]
+        [JsonPropertyName("id")]
+        public string? Id { get; set; } = string.Empty;
+
         [BsonElement("hora")]
         [JsonPropertyName("hora")]
         [BsonRepresentation(BsonType.Int32)]

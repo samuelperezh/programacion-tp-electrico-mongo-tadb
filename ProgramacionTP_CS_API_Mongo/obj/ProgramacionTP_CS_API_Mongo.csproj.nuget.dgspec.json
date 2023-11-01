@@ -1,26 +1,32 @@
 {
   "format": 1,
   "restore": {
-    "/workspaces/tadb_202320_ex04/ProgramacionTP_CS_API_Mongo/ProgramacionTP_CS_API_Mongo.csproj": {}
+    "D:\\U\\Sexto semestre\\Tópicos avanzados en bases de datos\\tadb_202320_ex04\\ProgramacionTP_CS_API_Mongo\\ProgramacionTP_CS_API_Mongo.csproj": {}
   },
   "projects": {
-    "/workspaces/tadb_202320_ex04/ProgramacionTP_CS_API_Mongo/ProgramacionTP_CS_API_Mongo.csproj": {
+    "D:\\U\\Sexto semestre\\Tópicos avanzados en bases de datos\\tadb_202320_ex04\\ProgramacionTP_CS_API_Mongo\\ProgramacionTP_CS_API_Mongo.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/workspaces/tadb_202320_ex04/ProgramacionTP_CS_API_Mongo/ProgramacionTP_CS_API_Mongo.csproj",
+        "projectUniqueName": "D:\\U\\Sexto semestre\\Tópicos avanzados en bases de datos\\tadb_202320_ex04\\ProgramacionTP_CS_API_Mongo\\ProgramacionTP_CS_API_Mongo.csproj",
         "projectName": "ProgramacionTP_CS_API_Mongo",
-        "projectPath": "/workspaces/tadb_202320_ex04/ProgramacionTP_CS_API_Mongo/ProgramacionTP_CS_API_Mongo.csproj",
-        "packagesPath": "/home/codespace/.nuget/packages/",
-        "outputPath": "/workspaces/tadb_202320_ex04/ProgramacionTP_CS_API_Mongo/obj/",
+        "projectPath": "D:\\U\\Sexto semestre\\Tópicos avanzados en bases de datos\\tadb_202320_ex04\\ProgramacionTP_CS_API_Mongo\\ProgramacionTP_CS_API_Mongo.csproj",
+        "packagesPath": "C:\\Users\\USUARIO\\.nuget\\packages\\",
+        "outputPath": "D:\\U\\Sexto semestre\\Tópicos avanzados en bases de datos\\tadb_202320_ex04\\ProgramacionTP_CS_API_Mongo\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "/home/codespace/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\USUARIO\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net7.0"
         ],
         "sources": {
-          "/usr/local/dotnet/7.0.306/sdk/7.0.306/Sdks/Microsoft.NET.Sdk.Web/library-packs": {},
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -75,7 +81,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/dotnet/7.0.306/sdk/7.0.306/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.400\\RuntimeIdentifierGraph.json"
         }
       }
     }

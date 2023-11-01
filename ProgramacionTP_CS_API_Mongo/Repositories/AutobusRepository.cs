@@ -102,7 +102,6 @@ namespace ProgramacionTP_CS_API_Mongo.Repositories
 
             return totalUtilizaciones.Count();
         }
-
         public async Task<bool> CreateAsync(Autobus unAutobus)
         {
             bool resultadoAccion = false;
@@ -113,10 +112,10 @@ namespace ProgramacionTP_CS_API_Mongo.Repositories
             await coleccionAutobuses.InsertOneAsync(unAutobus);
 
             var resultado = await coleccionAutobuses
-                    .Find(autobus => autobus.Codigo_autobus == unAutobus.Codigo_autobus)
-                    .FirstOrDefaultAsync();
+                .Find(autobus => autobus.Id == unAutobus.Id)
+                .FirstOrDefaultAsync();
 
-            if (resultado is not null)
+            if (resultado != null)
             {
                 var coleccionHorarios = conexion.GetCollection<Horario>(contextoDB.configuracionColecciones.ColeccionHorarios);
 
@@ -127,17 +126,59 @@ namespace ProgramacionTP_CS_API_Mongo.Repositories
 
                 if (horarioPico != null)
                 {
-                    // Asignar el horario en horario pico al autobús
-                    resultado.Horario = horarioPico.Hora;
-                    await coleccionAutobuses.ReplaceOneAsync(autobus => autobus.Codigo_autobus == resultado.Codigo_autobus, resultado);
+                    // Registrar la asignación en una colección de asignaciones
+                    var coleccionOperacionAutobuses = conexion.GetCollection<OperacionAutobus>(contextoDB.configuracionColecciones.ColeccionOperacionAutobuses);
+
+                    var asignacion = new OperacionAutobus
+                    {
+                        Codigo_autobus = resultado.Codigo_autobus,  // Asigna el ID del autobús
+                        Hora = horarioPico.Hora  // Asigna el ID del horario en horario pico
+                    };
+
+                    // Inserta el nuevo documento en la colección OperacionAutobus
+                    await coleccionOperacionAutobuses.InsertOneAsync(asignacion);
                 }
             }
 
-            if (resultado == null)
-                resultadoAccion = true;
-
+            // Aquí siempre debes tener una sentencia de retorno
             return resultadoAccion;
         }
+
+        //public async Task<bool> CreateAsync(Autobus unAutobus)
+        //{
+        //    bool resultadoAccion = false;
+
+        //    var conexion = contextoDB.CreateConnection();
+        //    var coleccionAutobuses = conexion.GetCollection<Autobus>(contextoDB.configuracionColecciones.ColeccionAutobuses);
+
+        //    await coleccionAutobuses.InsertOneAsync(unAutobus);
+
+        //    var resultado = await coleccionAutobuses
+        //            .Find(autobus => autobus.Codigo_autobus == unAutobus.Codigo_autobus)
+        //            .FirstOrDefaultAsync();
+
+        //    if (resultado is not null)
+        //    {
+        //        var coleccionHorarios = conexion.GetCollection<Horario>(contextoDB.configuracionColecciones.ColeccionHorarios);
+
+        //        // Buscar un horario en horario pico (cualquier criterio que indique horario pico)
+        //        var horarioPico = await coleccionHorarios
+        //            .Find(horario => horario.Horario_pico == true)
+        //            .FirstOrDefaultAsync();
+
+        //        if (horarioPico != null)
+        //        {
+        //            // Asignar el horario en horario pico al autobús
+        //            resultado.Horario = horarioPico.Hora;
+        //            await coleccionAutobuses.ReplaceOneAsync(autobus => autobus.Codigo_autobus == resultado.Codigo_autobus, resultado);
+        //        }
+        //    }
+
+        //    if (resultado == null)
+        //        resultadoAccion = true;
+
+        //    return resultadoAccion;
+        //}
 
         public async Task<bool> UpdateAsync(Autobus unAutobus)
         {
