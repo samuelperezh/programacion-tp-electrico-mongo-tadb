@@ -101,7 +101,7 @@ namespace ProgramacionTP_CS_API_Mongo.Repositories
                 if (horarioPico != null)
                 {
                     // Asignar el horario en horario pico al autobús
-                    resultado.Horario = horarioPico.Id;
+                    resultado.Horario = horarioPico.Id; // Preguntarle a Samu
                     await coleccionAutobuses.ReplaceOneAsync(autobus => autobus.Id == resultado.Id, resultado);
                 }
             }

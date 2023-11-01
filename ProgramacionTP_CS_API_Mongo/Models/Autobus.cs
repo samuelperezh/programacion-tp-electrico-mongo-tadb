@@ -6,6 +6,8 @@ namespace ProgramacionTP_CS_API_Mongo.Models
 {
     public class Autobus
     {
+        internal int Horario;
+
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
         [JsonPropertyName("id")]
