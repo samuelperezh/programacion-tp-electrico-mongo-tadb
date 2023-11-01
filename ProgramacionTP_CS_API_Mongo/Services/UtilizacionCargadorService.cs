@@ -118,7 +118,7 @@ namespace ProgramacionTP_CS_API_Mongo.Services
 
             //Validamos que la utilización exista previamente
             var utilizacionCargadorExistente = await _utilizacionCargadorRepository
-              .GetByUtilizationAsync(unaUtilizacionCargador.Codigo_cargador, unaUtilizacionCargador.Codigo_autobus, unaUtilizacionCargador.Hora);
+                .GetByUtilizationAsync(unaUtilizacionCargador.Codigo_cargador, unaUtilizacionCargador.Codigo_autobus, unaUtilizacionCargador.Hora);
 
             if (utilizacionCargadorExistente.Codigo_cargador == 0)
                 throw new AppValidationException($"No existe una utilización de cargador en el autobus {utilizacionCargadorExistente.Codigo_autobus}, en el cargador {utilizacionCargadorExistente.Codigo_cargador}, en la hora {utilizacionCargadorExistente.Hora}");

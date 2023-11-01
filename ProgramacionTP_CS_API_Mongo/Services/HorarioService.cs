@@ -19,14 +19,14 @@ namespace ProgramacionTP_CS_API_Mongo.Services
                 .GetAllAsync();
         }
 
-        public async Task<Horario> GetByIdAsync(int horario_id)
+        public async Task<Horario> GetByIdAsync(int hora)
         {
             //Validamos que el horario exista con ese Id
             var unHorario = await _horarioRepository
-                .GetByIdAsync(horario_id);
+                .GetByIdAsync(hora);
 
-            if (unHorario.Id == 0)
-                throw new AppValidationException($"Horario no encontrado con el id {horario_id}");
+            if (unHorario.Hora == 0)
+                throw new AppValidationException($"Horario no encontrado con el id {hora}");
 
             return unHorario;
         }

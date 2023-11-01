@@ -5,7 +5,6 @@ using ProgramacionTP_CS_API_Mongo.Services;
 
 namespace ProgramacionTP_CS_API_Mongo.Controllers
 {
-
     [Route("api/[controller]")]
     [ApiController]
     public class OperacionAutobusesController : Controller
@@ -46,13 +45,13 @@ namespace ProgramacionTP_CS_API_Mongo.Controllers
             }
         }
 
-        [HttpPut("{codigo_autobus:int}/{horario_id:int}")]
-        public async Task<IActionResult> UpdateAsync(int codigo_autobus, int horario_id, OperacionAutobus unaOperacionAutobus)
+        [HttpPut("{codigo_autobus:int}/{hora:int}")]
+        public async Task<IActionResult> UpdateAsync(int codigo_autobus, int hora, OperacionAutobus unaOperacionAutobus)
         {
             try
             {
                 var operacionAutobusActualizado = await _operacionAutobusService
-                    .UpdateAsync(codigo_autobus, horario_id, unaOperacionAutobus);
+                    .UpdateAsync(codigo_autobus, hora, unaOperacionAutobus);
 
                 return Ok(operacionAutobusActualizado);
 
@@ -67,15 +66,15 @@ namespace ProgramacionTP_CS_API_Mongo.Controllers
             }
         }
 
-        [HttpDelete("{codigo_autobus:int}/{horario_id:int}")]
-        public async Task<IActionResult> DeleteAsync(int codigo_autobus, int horario_id)
+        [HttpDelete("{codigo_autobus:int}/{hora:int}")]
+        public async Task<IActionResult> DeleteAsync(int codigo_autobus, int hora)
         {
             try
             {
                 await _operacionAutobusService
-                    .DeleteAsync(codigo_autobus, horario_id);
+                    .DeleteAsync(codigo_autobus, hora);
 
-                return Ok($"La operacion del autobus {codigo_autobus} en el horario {horario_id} fue eliminada");
+                return Ok($"La operacion del autobus {codigo_autobus} en el horario {hora} fue eliminada");
 
             }
             catch (AppValidationException error)

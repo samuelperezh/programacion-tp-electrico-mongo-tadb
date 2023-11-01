@@ -1,7 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using ProgramacionTP_CS_API_Mongo.Helpers;
+﻿using ProgramacionTP_CS_API_Mongo.Helpers;
+using ProgramacionTP_CS_API_Mongo.Models;
 using ProgramacionTP_CS_API_Mongo.Services;
+using Microsoft.AspNetCore.Mvc;
 
+namespace ProgramacionTP_CS_API_Mongo.Controllers
+{
     [Route("api/[controller]")]
     [ApiController]
     public class HorariosController : Controller
@@ -22,13 +25,13 @@ using ProgramacionTP_CS_API_Mongo.Services;
             return Ok(losHorarios);
         }
 
-        [HttpGet("{horario_id:int}")]
-        public async Task<IActionResult> GetByIdAsync(int horario_id)
+        [HttpGet("{hora:int}")]
+        public async Task<IActionResult> GetByIdAsync(int hora)
         {
             try
             {
                 var unHorario = await _horarioService
-                    .GetByIdAsync(horario_id);
+                    .GetByIdAsync(hora);
                 return Ok(unHorario);
             }
             catch (AppValidationException error)
@@ -37,3 +40,4 @@ using ProgramacionTP_CS_API_Mongo.Services;
             }
         }
     }
+}

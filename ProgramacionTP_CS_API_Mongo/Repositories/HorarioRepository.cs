@@ -26,7 +26,7 @@ namespace ProgramacionTP_CS_API_Mongo.Repositories
                 return losHorarios;
             }
 
-            public async Task<Horario> GetByIdAsync(int horario_id)
+            public async Task<Horario> GetByIdAsync(int hora)
             {
                 Horario unHorario = new();
 
@@ -34,7 +34,7 @@ namespace ProgramacionTP_CS_API_Mongo.Repositories
                 var coleccionHorarios = conexion.GetCollection<Horario>(contextoDB.configuracionColecciones.ColeccionHorarios);
 
                 var resultado = await coleccionHorarios
-                    .Find(Horario => Horario.Id == horario_id)
+                    .Find(Horario => Horario.Hora == hora)
                     .FirstOrDefaultAsync();
 
                 if (resultado is not null)
