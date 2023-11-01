@@ -25,7 +25,7 @@ namespace ProgramacionTP_CS_API_Mongo.Services
             // Validamos que el autobus exista con ese Id
             var unAutobus = await _autobusRepository
                 .GetByIdAsync(codigo_autobus);
-            if(unAutobus.CodigoAutobus == 0)
+            if(unAutobus.Codigo_autobus == 0)
                 throw new AppValidationException($"No existe un autobus con el Id {codigo_autobus}");
 
             return unAutobus;
@@ -42,7 +42,7 @@ namespace ProgramacionTP_CS_API_Mongo.Services
             var autobusExistente = await _autobusRepository
                 .GetByNameAsync(unAutobus.Nombre_autobus!);
 
-            if(autobusExistente.CodigoAutobus != 0)
+            if(autobusExistente.Codigo_autobus != 0)
                 throw new AppValidationException($"Ya existe un autobus con el nombre {unAutobus.Nombre_autobus}");
 
             try
@@ -67,7 +67,7 @@ namespace ProgramacionTP_CS_API_Mongo.Services
         public async Task<Autobus> UpdateAsync(int codigo_autobus, Autobus unAutobus)
         {
             // Validamos que los parámetros sean consistentes
-            if (codigo_autobus != unAutobus.CodigoAutobus)
+            if (codigo_autobus != unAutobus.Codigo_autobus)
                 throw new AppValidationException($"Inconsistencia en el Id del autobus a actualizar. Verifica argumentos");
 
             // Validamos que el autobus tenga nombre
@@ -83,10 +83,10 @@ namespace ProgramacionTP_CS_API_Mongo.Services
 
             // validamos que el autobus a actualizar si exista con ese Id
             autobusExistente = await _autobusRepository
-                .GetByIdAsync(unAutobus.CodigoAutobus);
+                .GetByIdAsync(unAutobus.Codigo_autobus);
 
             if (string.IsNullOrEmpty(autobusExistente.Id))
-                throw new AppValidationException($"No existe un autobus con el Id {unAutobus.CodigoAutobus} que se pueda actualizar");
+                throw new AppValidationException($"No existe un autobus con el Id {unAutobus.Codigo_autobus} que se pueda actualizar");
 
             try
             {
@@ -118,7 +118,7 @@ namespace ProgramacionTP_CS_API_Mongo.Services
 
             // Validamos que el autobus no tenga asociadas utilizaciones de cargadores
             var cantidadUtilizacionCargadoresAsociados = await _autobusRepository
-                .GetTotalAssociatedChargerUtilizationAsync(autobusExistente.CodigoAutobus);
+                .GetTotalAssociatedChargerUtilizationAsync(autobusExistente.Codigo_autobus);
 
             if (cantidadUtilizacionCargadoresAsociados > 0)
                 throw new AppValidationException($"Existen {cantidadUtilizacionCargadoresAsociados} utilizaciones de cargadores " +
@@ -126,7 +126,7 @@ namespace ProgramacionTP_CS_API_Mongo.Services
 
             // Validamos que el autobus no tenga asociadas operaciones
             var cantidadOperacionesAutobusAsociados = await _autobusRepository
-                .GetTotalAssociatedAutobusOperationAsync(autobusExistente.CodigoAutobus);
+                .GetTotalAssociatedAutobusOperationAsync(autobusExistente.Codigo_autobus);
 
             if (cantidadOperacionesAutobusAsociados > 0)
                 throw new AppValidationException($"Existen {cantidadOperacionesAutobusAsociados} operaciones de autobuses " +

@@ -19,7 +19,7 @@ namespace ProgramacionTP_CS_API_Mongo.Models
         [BsonElement("hora")]
         [JsonPropertyName("hora")]
         [BsonRepresentation(BsonType.Int32)]
-         public int Hora { get; set; } = 0;
+        public int Hora { get; set; } = 0;
 
             public override bool Equals(object? obj)
             {
