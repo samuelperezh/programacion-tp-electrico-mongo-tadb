@@ -6,8 +6,6 @@ namespace ProgramacionTP_CS_API_Mongo.Models
 {
     public class Autobus
     {
-        internal int Horario;
-
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
         [JsonPropertyName("id")]
@@ -16,8 +14,7 @@ namespace ProgramacionTP_CS_API_Mongo.Models
         [BsonElement("codigo_autobus")]
         [JsonPropertyName("codigo_autobus")]
         [BsonRepresentation(BsonType.Int32)]
-        public int CodigoAutobus { get; set; } = 0;
-
+        public int Codigo_autobus { get; set; } = 0;
 
         [BsonElement("nombre_autobus")]
         [JsonPropertyName("nombre_autobus")]
@@ -32,7 +29,7 @@ namespace ProgramacionTP_CS_API_Mongo.Models
             var otroAutobus = (Autobus)obj;
 
             return Id == otroAutobus.Id
-                && CodigoAutobus == otroAutobus.CodigoAutobus
+                && Codigo_autobus.Equals(otroAutobus.Codigo_autobus)
                 && Nombre_autobus.Equals(otroAutobus.Nombre_autobus);
         }
 
@@ -42,7 +39,7 @@ namespace ProgramacionTP_CS_API_Mongo.Models
             {
                 int hash = 3;
                 hash = hash * 5 + (Id?.GetHashCode() ?? 0);
-                hash = hash * 5 + CodigoAutobus.GetHashCode();
+                hash = hash * 5 + Codigo_autobus.GetHashCode();
                 hash = hash * 5 + (Nombre_autobus?.GetHashCode() ?? 0);
 
                 return hash;
