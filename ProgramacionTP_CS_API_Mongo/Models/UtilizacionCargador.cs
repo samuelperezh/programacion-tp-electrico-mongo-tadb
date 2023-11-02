@@ -6,6 +6,11 @@ namespace ProgramacionTP_CS_API_Mongo.Models
 {
     public class UtilizacionCargador
     {
+        [BsonId]
+        [BsonRepresentation(BsonType.ObjectId)]
+        [JsonPropertyName("id")]
+        public string? Id { get; set; } = string.Empty;
+
         [BsonElement("codigo_cargador")]
         [JsonPropertyName("codigo_cargador")]
         [BsonRepresentation(BsonType.Int32)]

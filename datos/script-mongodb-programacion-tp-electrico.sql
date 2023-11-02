@@ -47,7 +47,7 @@ db.createCollection("cargadores", {
       $jsonSchema: {
          bsonType: "object",
          title: "Cargadores de Buses del Transporte Público Eléctrico",
-         required: ["codigo_cargador", "nombre_cargador"],  // Cambia el orden de los campos requeridos
+         required: ["codigo_cargador", "nombre_cargador"],  
          properties: {
             codigo_cargador: {
                bsonType: "int",  // Define el tipo como entero (int)
@@ -71,7 +71,7 @@ db.createCollection("autobuses", {
       $jsonSchema: {
          bsonType: "object",
          title: "Autobuses del Transporte Público Eléctrico",
-         required: ["codigo_autobus", "nombre_autobus"],  // Cambia el orden de los campos requeridos
+         required: ["codigo_autobus", "nombre_autobus"],  
          properties: {
             codigo_autobus: {
                bsonType: "int",  // Define el tipo como entero (int)
@@ -94,14 +94,10 @@ db.createCollection("horarios", {
       $jsonSchema: {
          bsonType: "object",
          title: "Horarios de Operación del Transporte Público Eléctrico",
-         required: ["hora", "id", "horario_pico"],  // Incluye el nuevo campo "hora" antes de "horario_pico"
+         required: ["hora", "horario_pico"],  // Incluye el nuevo campo "hora" antes de "horario_pico"
          properties: {
-            id: {
-               bsonType: "objectId",  // Mantén el tipo "objectId" para el campo "id"
-               description: "'id' debe ser un ObjectId y no puede ser nulo"
-            },
             hora: {
-               bsonType: "int",  // Define el tipo como entero (int) para "hora"
+               bsonType: "int",  // Define el tipo como entero int para "hora"
                description: "'hora' debe ser un número entero y no puede ser nulo"
             },
             horario_pico: {
@@ -120,7 +116,7 @@ db.createCollection("utilizacion_cargadores", {
       $jsonSchema: {
          bsonType: "object",
          title: "Utilización de Cargadores de Buses del Transporte Público Eléctrico",
-         required: ["codigo_cargador", "codigo_autobus", "hora"],  // Cambia los nombres de los campos requeridos
+         required: ["codigo_cargador", "codigo_autobus", "hora"],  
          properties: {
             codigo_cargador: {
                bsonType: "int",
@@ -163,4 +159,55 @@ db.createCollection("operacion_autobuses", {
 -- ***************************************************
 -- Consultas de apoyo para implementar el repositorio
 -- ***************************************************
+
+--Todos los autobuses
+db.autobuses.find({});
+
+--Todos los autobuses por id
+db.autobuses.find({codigo_autobus: 1});
+
+--Todos los autobuses por nombre
+db.autobuses.find({nombre_autobus: "Circular"});
+
+--Todos los cargadores
+db.cargadores.find({});
+
+--Todos los cargadores por id
+db.cargadores.find({codigo_cargador: 1});
+
+--Todos los cargadores por nombre
+db.cargadores.find({nombre_cargador: "Cargador 1"});
+
+--Todos los horarios
+db.horarios.find({});
+
+--Todos los horarios por id
+db.horarios.find({hora: 1});
+
+--Todos los horarios por horario_pico
+db.horarios.find({horario_pico: true});
+
+--Todos las operaciones de los autobuses
+db.operacion_autobuses.find({});
+
+--Todos las operaciones de los autobuses por id
+db.operacion_autobuses.find({codigo_autobus: 1});
+
+--Todos las operaciones de los autobuses por hora
+db.operacion_autobuses.find({hora: 1});
+
+--Todos las utilizaciones de los cargadores
+db.utilizacion_cargadores.find({});
+
+--Todos las utilizaciones de los cargadores por id
+db.utilizacion_cargadores.find({codigo_cargador: 1});
+
+--Todos las utilizaciones de los cargadores por hora
+db.utilizacion_cargadores.find({hora: 1});
+
+--Todos las utilizaciones de los cargadores por autobus
+db.utilizacion_cargadores.find({codigo_autobus: 1});
+
+
+
 

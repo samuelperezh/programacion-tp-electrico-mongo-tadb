@@ -6,6 +6,11 @@ namespace ProgramacionTP_CS_API_Mongo.Models
 {
     public class OperacionAutobus
     {
+        [BsonId]
+        [BsonRepresentation(BsonType.ObjectId)]
+        [JsonPropertyName("id")]
+        public string? Id { get; set; } = string.Empty;
+
         [BsonElement("codigo_autobus")]
         [JsonPropertyName("codigo_autobus")]
         [BsonRepresentation(BsonType.Int32)]
