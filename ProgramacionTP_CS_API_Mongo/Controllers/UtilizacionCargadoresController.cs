@@ -45,13 +45,13 @@ namespace ProgramacionTB_CS_API_Mongo.Controllers
             }
         }
 
-        [HttpPut("{codigo_cargador:int}/{codigo_autobus:int}/{hora:int}")]
-        public async Task<IActionResult> UpdateAsync(int codigo_cargador, int codigo_autobus, int hora, UtilizacionCargador unaUtilizacionCargador)
+        [HttpPut("{cargador_id:int}/{autobus_id:int}/{hora:int}")]
+        public async Task<IActionResult> UpdateAsync(int cargador_id, int autobus_id, int hora, UtilizacionCargador unaUtilizacionCargador)
         {
             try
             {
                 var utilizacionCargadorActualizado = await _utilizacionCargadorService
-                    .UpdateAsync(codigo_cargador, codigo_autobus, hora, unaUtilizacionCargador);
+                    .UpdateAsync(cargador_id, autobus_id, hora, unaUtilizacionCargador);
 
                 return Ok(utilizacionCargadorActualizado);
 
@@ -66,15 +66,15 @@ namespace ProgramacionTB_CS_API_Mongo.Controllers
             }
         }
 
-        [HttpDelete("{codigo_cargador:int}/{codigo_autobus:int}/{hora:int}")]
-        public async Task<IActionResult> DeleteAsync(int codigo_cargador, int codigo_autobus, int hora)
+        [HttpDelete("{cargador_id:int}/{autobus_id:int}/{hora:int}")]
+        public async Task<IActionResult> DeleteAsync(int cargador_id, int autobus_id, int hora)
         {
             try
             {
                 await _utilizacionCargadorService
-                    .DeleteAsync(codigo_cargador, codigo_autobus, hora);
+                    .DeleteAsync(cargador_id, autobus_id, hora);
 
-                return Ok($"Utilización del cargador {codigo_cargador} con el autobus {codigo_autobus} y en el horario {hora} fue eliminada");
+                return Ok($"Utilización del cargador {cargador_id} con el autobus {autobus_id} y en el horario {hora} fue eliminada");
 
             }
             catch (AppValidationException error)

@@ -25,13 +25,13 @@ namespace ProgramacionTP_CS_API_Mongo.Controllers
             return Ok(losCargadores);
         }
 
-        [HttpGet("{codigo_cargador:int}")]
-        public async Task<IActionResult> GetByIdAsync(int codigo_cargador)
+        [HttpGet("{cargador_id:int}")]
+        public async Task<IActionResult> GetByIdAsync(int cargador_id)
         {
             try
             {
                 var unCargador = await _cargadorService
-                    .GetByIdAsync(codigo_cargador);
+                    .GetByIdAsync(cargador_id);
                 return Ok(unCargador);
             }
             catch (AppValidationException error)
@@ -60,13 +60,13 @@ namespace ProgramacionTP_CS_API_Mongo.Controllers
             }
         }
 
-        [HttpPut("{codigo_cargador:int}")]
-        public async Task<IActionResult> UpdateAsync(int codigo_cargador, Cargador unCargador)
+        [HttpPut("{cargador_id:int}")]
+        public async Task<IActionResult> UpdateAsync(int cargador_id, Cargador unCargador)
         {
             try
             {
                 var cargadorActualizado = await _cargadorService
-                    .UpdateAsync(codigo_cargador, unCargador);
+                    .UpdateAsync(cargador_id, unCargador);
 
                 return Ok(cargadorActualizado);
 
@@ -81,15 +81,15 @@ namespace ProgramacionTP_CS_API_Mongo.Controllers
             }
         }
 
-        [HttpDelete("{codigo_cargador:int}")]
-        public async Task<IActionResult> DeleteAsync(int codigo_cargador)
+        [HttpDelete("{cargador_id:int}")]
+        public async Task<IActionResult> DeleteAsync(int cargador_id)
         {
             try
             {
                 await _cargadorService
-                    .DeleteAsync(codigo_cargador);
+                    .DeleteAsync(cargador_id);
 
-                return Ok($"Cargador {codigo_cargador} fue eliminada");
+                return Ok($"Cargador {cargador_id} fue eliminada");
 
             }
             catch (AppValidationException error)

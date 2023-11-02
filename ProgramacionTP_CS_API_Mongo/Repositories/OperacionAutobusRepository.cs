@@ -24,14 +24,14 @@ namespace ProgramacionTP_CS_API_Mongo.Repositories
 
             var lasOperaciones = await coleccionOperacionAutobuses
                 .Find(_ => true)
-                .SortBy(operacion => operacion.Codigo_autobus)
+                .SortBy(operacion => operacion.Autobus_id)
                 .ThenBy(operacion => operacion.Hora)
                 .ToListAsync();
 
             return lasOperaciones;
         }
 
-        public async Task<OperacionAutobus> GetByOperationAsync(int codigo_autobus, int hora)
+        public async Task<OperacionAutobus> GetByOperationAsync(string autobus_id, int hora)
         {
             OperacionAutobus unaOperacionAutobus = new OperacionAutobus();
 
@@ -39,7 +39,7 @@ namespace ProgramacionTP_CS_API_Mongo.Repositories
             var coleccionOperacionAutobuses = conexion.GetCollection<OperacionAutobus>(contextoDB.configuracionColecciones.ColeccionOperacionAutobuses); ;
 
             var resultado = await coleccionOperacionAutobuses
-                .Find(operacion => operacion.Codigo_autobus == codigo_autobus && operacion.Hora == hora)
+                .Find(operacion => operacion.Autobus_id == autobus_id && operacion.Hora == hora)
                 .FirstOrDefaultAsync();
 
             if (resultado is not null)
@@ -48,7 +48,7 @@ namespace ProgramacionTP_CS_API_Mongo.Repositories
             return unaOperacionAutobus;
         }
 
-        public async Task<string> GetAutobusStateAsync(int hora, int codigo_autobus)
+        public async Task<string> GetAutobusStateAsync(int hora, string autobus_id)
         {
             var conexion = contextoDB.CreateConnection();
             var coleccionOperacionAutobuses = conexion.GetCollection<OperacionAutobus>(contextoDB.configuracionColecciones.ColeccionOperacionAutobuses);
@@ -58,7 +58,7 @@ namespace ProgramacionTP_CS_API_Mongo.Repositories
                 new BsonDocument("$match", new BsonDocument
                 {
                     { "hora", hora },
-                    { "codigo_autobus", codigo_autobus }
+                    { "autobus_id", autobus_id }
                 }),
                 new BsonDocument("$group", new BsonDocument
                 {
@@ -93,14 +93,14 @@ namespace ProgramacionTP_CS_API_Mongo.Repositories
         {
             bool resultadoAccion = false;
 
-            if (unaOperacionAutobus.Codigo_autobus != 0)
+            if (unaOperacionAutobus.Autobus_id != 0)
             {
                 var conexion = contextoDB.CreateConnection();
                 var coleccionOperacionAutobuses = conexion.GetCollection<OperacionAutobus>(contextoDB.configuracionColecciones.ColeccionOperacionAutobuses);
 
                 await coleccionOperacionAutobuses.InsertOneAsync(unaOperacionAutobus);
 
-                var resultado = await GetByOperationAsync(unaOperacionAutobus.Codigo_autobus, unaOperacionAutobus.Hora);
+                var resultado = await GetByOperationAsync(unaOperacionAutobus.Autobus_id, unaOperacionAutobus.Hora);
 
                 if (resultado is not null)
                 {
@@ -119,7 +119,7 @@ namespace ProgramacionTP_CS_API_Mongo.Repositories
             var coleccionOperacionAutobuses = conexion.GetCollection<OperacionAutobus>(contextoDB.configuracionColecciones.ColeccionOperacionAutobuses);
             
             var resultado = await coleccionOperacionAutobuses.ReplaceOneAsync(
-                                operacion => operacion.Codigo_autobus == unaOperacionAutobus.Codigo_autobus && operacion.Hora == unaOperacionAutobus.Hora,
+                                operacion => operacion.Autobus_id == unaOperacionAutobus.Autobus_id && operacion.Hora == unaOperacionAutobus.Hora,
                                                 unaOperacionAutobus);
             if (resultado.IsAcknowledged)
                 resultadoAccion = true;
@@ -135,7 +135,7 @@ namespace ProgramacionTP_CS_API_Mongo.Repositories
             var coleccionOperacionAutobuses = conexion.GetCollection<OperacionAutobus>(contextoDB.configuracionColecciones.ColeccionOperacionAutobuses);
 
             var resultado = await coleccionOperacionAutobuses.DeleteOneAsync(
-                                operacion => operacion.Codigo_autobus == unaOperacionAutobus.Codigo_autobus && operacion.Hora == unaOperacionAutobus.Hora);
+                                operacion => operacion.Autobus_id == unaOperacionAutobus.Autobus_id && operacion.Hora == unaOperacionAutobus.Hora);
 
             if (resultado.IsAcknowledged)
                 resultadoAccion = true;

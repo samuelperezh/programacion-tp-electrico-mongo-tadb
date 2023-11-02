@@ -11,10 +11,11 @@ namespace ProgramacionTP_CS_API_Mongo.Models
         [JsonPropertyName("id")]
         public string? Id { get; set; } = string.Empty;
 
-        [BsonElement("codigo_autobus")]
-        [JsonPropertyName("codigo_autobus")]
-        [BsonRepresentation(BsonType.Int32)]
-        public int Codigo_autobus { get; set; } = 0;
+        [BsonElement("autobus_id")]
+        [JsonPropertyName("autobus_id")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string? Autobus_id { get; set; } = null;
 
         [BsonElement("nombre_autobus")]
         [JsonPropertyName("nombre_autobus")]
@@ -33,7 +34,8 @@ namespace ProgramacionTP_CS_API_Mongo.Models
 
                 var otraOperacionAutobus = (OperacionAutobus)obj;
 
-                return Codigo_autobus.Equals(otraOperacionAutobus.Codigo_autobus)
+                return Id == otraOperacionAutobus.Id
+                    && Autobus_id == otraOperacionAutobus.Autobus_id
                     && Nombre_autobus.Equals(otraOperacionAutobus.Nombre_autobus)
                     && Hora.Equals(otraOperacionAutobus.Hora);
             }
@@ -43,7 +45,8 @@ namespace ProgramacionTP_CS_API_Mongo.Models
                 unchecked
                 {
                     int hash = 3;
-                    hash = hash * 5 + Codigo_autobus.GetHashCode();
+                    hash = hash * 5 + (Id?.GetHashCode() ?? 0);
+                    hash = hash * 5 + (Autobus_id?.GetHashCode() ?? 0);
                     hash = hash * 5 + (Nombre_autobus?.GetHashCode() ?? 0);
                     hash = hash * 5 + Hora.GetHashCode();
 

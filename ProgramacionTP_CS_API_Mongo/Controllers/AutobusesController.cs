@@ -25,13 +25,13 @@ namespace ProgramacionTP_CS_API_PostgreSQL_Dapper.Controllers
             return Ok(losAutobuses);
         }
 
-        [HttpGet("{codigo_autobus:int}")]
-        public async Task<IActionResult> GetByIdAsync(int codigo_autobus)
+        [HttpGet("{autobus_id:int}")]
+        public async Task<IActionResult> GetByIdAsync(int autobus_id)
         {
             try
             {
                 var unAutobus = await _autobusService
-                    .GetByIdAsync(codigo_autobus);
+                    .GetByIdAsync(autobus_id);
                 return Ok(unAutobus);
             }
             catch (AppValidationException error)
@@ -60,13 +60,13 @@ namespace ProgramacionTP_CS_API_PostgreSQL_Dapper.Controllers
             }
         }
 
-        [HttpPut("{codigo_autobus:int}")]
-        public async Task<IActionResult> UpdateAsync(int codigo_autobus, Autobus unAutobus)
+        [HttpPut("{autobus_id:int}")]
+        public async Task<IActionResult> UpdateAsync(int autobus_id, Autobus unAutobus)
         {
             try
             {
                 var autobusActualizado = await _autobusService
-                    .UpdateAsync(codigo_autobus, unAutobus);
+                    .UpdateAsync(autobus_id, unAutobus);
 
                 return Ok(autobusActualizado);
 
@@ -81,15 +81,15 @@ namespace ProgramacionTP_CS_API_PostgreSQL_Dapper.Controllers
             }
         }
 
-        [HttpDelete("{codigo_autobus:int}")]
-        public async Task<IActionResult> DeleteAsync(int codigo_autobus)
+        [HttpDelete("{autobus_id:int}")]
+        public async Task<IActionResult> DeleteAsync(int autobus_id)
         {
             try
             {
                 await _autobusService
-                    .DeleteAsync(codigo_autobus);
+                    .DeleteAsync(autobus_id);
 
-                return Ok($"Autobus {codigo_autobus} fue eliminada");
+                return Ok($"Autobus {autobus_id} fue eliminada");
 
             }
             catch (AppValidationException error)

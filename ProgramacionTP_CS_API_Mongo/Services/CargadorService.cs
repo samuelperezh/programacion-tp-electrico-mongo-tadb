@@ -19,14 +19,14 @@ namespace ProgramacionTP_CS_API_Mongo.Services
                 .GetAllAsync();
         }
 
-        public async Task<Cargador> GetByIdAsync(int codigo_cargador)
+        public async Task<Cargador> GetByIdAsync(string cargador_id)
         {
             // Validamos que el cargador exista con ese Id
             var unCargador = await _cargadorRepository
-                .GetByIdAsync(codigo_cargador);
+                .GetByIdAsync(cargador_id);
 
-            if (unCargador.Codigo_cargador == 0)
-                throw new AppValidationException($"Cargador no encontrado con el id {codigo_cargador}");
+            if (string.IsNullOrEmpty(unCargador.Id))
+                throw new AppValidationException($"Cargador no encontrado con el id {cargador_id}");
 
             return unCargador;
         }
@@ -37,8 +37,9 @@ namespace ProgramacionTP_CS_API_Mongo.Services
             var cargadorExistente = await _cargadorRepository
                 .GetByNameAsync(unCargador.Nombre_cargador);
 
-            if (cargadorExistente.Codigo_cargador != 0)
+            if (string.IsNullOrEmpty(cargadorExistente.Id) == false)
                 throw new AppValidationException($"Ya existe un cargador con el nombre {cargadorExistente.Nombre_cargador}");
+            
             try
             {
                 bool resultadoAccion = await _cargadorRepository
@@ -58,18 +59,18 @@ namespace ProgramacionTP_CS_API_Mongo.Services
             return cargadorExistente;
         }
 
-        public async Task<Cargador> UpdateAsync(int codigo_cargador, Cargador unCargador)
+        public async Task<Cargador> UpdateAsync(string cargador_id, Cargador unCargador)
         {
             // Validamos que los parómetros sean consistentes
-            if (codigo_cargador != unCargador.Codigo_cargador)
+            if (cargador_id != unCargador.Id)
                 throw new AppValidationException($"Inconsistencia en el Id del cargador a actualizar. Verifica argumentos");
 
             // Validamos que el cargador exista con ese Id
             var cargadorExistente = await _cargadorRepository
-                .GetByIdAsync(codigo_cargador);
+                .GetByIdAsync(cargador_id);
 
-            if (cargadorExistente.Codigo_cargador == 0)
-                throw new AppValidationException($"No existe un cargador registrado con el id {unCargador.Codigo_cargador}");
+            if (string.IsNullOrEmpty(cargadorExistente.Id))
+                throw new AppValidationException($"No existe un cargador registrado con el id {unCargador.Id}");
 
             // Validamos que el cargador tenga nombre
             if (unCargador.Nombre_cargador.Length == 0)
@@ -106,18 +107,18 @@ namespace ProgramacionTP_CS_API_Mongo.Services
             return cargadorExistente;
         }
 
-        public async Task DeleteAsync(int codigo_cargador)
+        public async Task DeleteAsync(string cargador_id)
         {
             // Validamos que el cargador a eliminar si exista con ese Id
             var cargadorExistente = await _cargadorRepository
-                .GetByIdAsync(codigo_cargador);
+                .GetByIdAsync(cargador_id);
 
-            if (cargadorExistente.Codigo_cargador == 0)
-                throw new AppValidationException($"No existe un cargador con el Id {codigo_cargador} que se pueda eliminar");
+            if (string.IsNullOrEmpty(cargadorExistente.Id))
+                throw new AppValidationException($"No existe un cargador con el Id {cargador_id} que se pueda eliminar");
 
             // Validamos que el cargador no tenga asociadas utilizaciones
             var cantidadUtilizacionesAsociados = await _cargadorRepository
-                .GetTotalAssociatedChargerUtilizationAsync(cargadorExistente.Codigo_cargador);
+                .GetTotalAssociatedChargerUtilizationAsync(cargadorExistente.Id);
 
             if (cantidadUtilizacionesAsociados > 0)
                 throw new AppValidationException($"Existen {cantidadUtilizacionesAsociados} cargadores " +

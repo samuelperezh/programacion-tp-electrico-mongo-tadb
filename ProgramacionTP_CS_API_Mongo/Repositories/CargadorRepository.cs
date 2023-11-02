@@ -29,7 +29,7 @@ namespace ProgramacionTP_CS_API_Mongo.Repositories
             return losCargadores;
         }
 
-        public async Task<Cargador> GetByIdAsync(int codigo_cargador)
+        public async Task<Cargador> GetByIdAsync(int cargador_id)
         {
             Cargador unCargador = new Cargador();
 
@@ -37,7 +37,7 @@ namespace ProgramacionTP_CS_API_Mongo.Repositories
             var coleccionCargadores = conexion.GetCollection<Cargador>(contextoDB.configuracionColecciones.ColeccionCargadores);
 
             var resultado = await coleccionCargadores
-                    .Find(cargador => cargador.Codigo_cargador == codigo_cargador)
+                    .Find(cargador => cargador.Cargador_id == cargador_id)
                     .FirstOrDefaultAsync();
             
             if (resultado is not null)
@@ -63,21 +63,21 @@ namespace ProgramacionTP_CS_API_Mongo.Repositories
             return unCargador;
         }
 
-        public async Task<int> GetTotalAssociatedChargerUtilizationAsync(int codigo_cargador)
+        public async Task<int> GetTotalAssociatedChargerUtilizationAsync(int cargador_id)
         {
-            Cargador unCargador = await GetByIdAsync(codigo_cargador);
+            Cargador unCargador = await GetByIdAsync(cargador_id);
             
             var conexion = contextoDB.CreateConnection();
             var coleccionUtilizacionCargadores = conexion.GetCollection<UtilizacionCargador>("utilizacion_cargadores");
 
             var builder = Builders<UtilizacionCargador>.Filter;
             var filtro = builder.And(
-                builder.Eq(utilizacionCargador => utilizacionCargador.Codigo_cargador, unCargador.Codigo_cargador),
+                builder.Eq(utilizacionCargador => utilizacionCargador.Cargador_id, unCargador.Cargador_id),
                 builder.Eq(utilizacionCargador => utilizacionCargador.Nombre_cargador, unCargador.Nombre_cargador));
 
             var totalUtilizaciones = await coleccionUtilizacionCargadores
                 .Find(filtro)
-                .SortBy(utilizacionCargador => utilizacionCargador.Codigo_cargador)
+                .SortBy(utilizacionCargador => utilizacionCargador.Cargador_id)
                 .ToListAsync();
 
             return totalUtilizaciones.Count();
@@ -107,7 +107,7 @@ namespace ProgramacionTP_CS_API_Mongo.Repositories
             var conexion = contextoDB.CreateConnection();
             var coleccionCargadores = conexion.GetCollection<Cargador>(contextoDB.configuracionColecciones.ColeccionCargadores);
 
-            var resultado = await coleccionCargadores.ReplaceOneAsync(cargador => cargador.Codigo_cargador == unCargador.Codigo_cargador, unCargador);
+            var resultado = await coleccionCargadores.ReplaceOneAsync(cargador => cargador.Cargador_id == unCargador.Cargador_id, unCargador);
 
             if (resultado.IsAcknowledged)
                 resultadoAccion = true;
@@ -122,7 +122,7 @@ namespace ProgramacionTP_CS_API_Mongo.Repositories
             var conexion = contextoDB.CreateConnection();
             var coleccionCargadores = conexion.GetCollection<Cargador>(contextoDB.configuracionColecciones.ColeccionCargadores);
 
-            var resultado = await coleccionCargadores.DeleteOneAsync(cargador => cargador.Codigo_cargador == unCargador.Codigo_cargador);
+            var resultado = await coleccionCargadores.DeleteOneAsync(cargador => cargador.Cargador_id == unCargador.Cargador_id);
 
             if (resultado.IsAcknowledged)
                 resultadoAccion = true;

@@ -29,7 +29,7 @@ namespace ProgramacionTP_CS_API_Mongo.Repositories
                 return losAutobuses;
         }
 
-        public async Task<Autobus> GetByIdAsync(int codigo_autobus)
+        public async Task<Autobus> GetByIdAsync(int autobus_id)
         {
             Autobus unAutobus = new Autobus();
 
@@ -37,7 +37,7 @@ namespace ProgramacionTP_CS_API_Mongo.Repositories
             var coleccionAutobuses = conexion.GetCollection<Autobus>(contextoDB.configuracionColecciones.ColeccionAutobuses);
 
             var resultado = await coleccionAutobuses
-                    .Find(autobus => autobus.Codigo_autobus == codigo_autobus)
+                    .Find(autobus => autobus.Autobus_id == autobus_id)
                     .FirstOrDefaultAsync();
 
             if (resultado is not null)
@@ -63,41 +63,41 @@ namespace ProgramacionTP_CS_API_Mongo.Repositories
             return unAutobus;
         }
 
-        public async Task<int> GetTotalAssociatedChargerUtilizationAsync(int codigo_autobus)
+        public async Task<int> GetTotalAssociatedChargerUtilizationAsync(int autobus_id)
         {
-            Autobus unAutobus = await GetByIdAsync(codigo_autobus);
+            Autobus unAutobus = await GetByIdAsync(autobus_id);
             
             var conexion = contextoDB.CreateConnection();
             var coleccionUtilizacionCargadores = conexion.GetCollection<UtilizacionCargador>("utilizacion_cargadores");
 
             var builder = Builders<UtilizacionCargador>.Filter;
             var filtro = builder.And(
-                builder.Eq(utilizacionCargador => utilizacionCargador.Codigo_autobus, unAutobus.Codigo_autobus),
+                builder.Eq(utilizacionCargador => utilizacionCargador.Autobus_id, unAutobus.Autobus_id),
                 builder.Eq(utilizacionCargador => utilizacionCargador.Nombre_autobus, unAutobus.Nombre_autobus));
 
             var totalUtilizaciones = await coleccionUtilizacionCargadores
                 .Find(filtro)
-                .SortBy(utilizacionCargador => utilizacionCargador.Codigo_cargador)
+                .SortBy(utilizacionCargador => utilizacionCargador.Cargador_id)
                 .ToListAsync();
 
             return totalUtilizaciones.Count();
         }
 
-        public async Task<int> GetTotalAssociatedAutobusOperationAsync(int codigo_autobus)
+        public async Task<int> GetTotalAssociatedAutobusOperationAsync(int autobus_id)
         {
-            Autobus unAutobus = await GetByIdAsync(codigo_autobus);
+            Autobus unAutobus = await GetByIdAsync(autobus_id);
             
             var conexion = contextoDB.CreateConnection();
             var coleccionOperacionAutobuses = conexion.GetCollection<OperacionAutobus>("operacion_autobuses");
 
             var builder = Builders<OperacionAutobus>.Filter;
             var filtro = builder.And(
-                builder.Eq(operacionAutobuses => operacionAutobuses.Codigo_autobus, unAutobus.Codigo_autobus),
+                builder.Eq(operacionAutobuses => operacionAutobuses.Autobus_id, unAutobus.Autobus_id),
                 builder.Eq(operacionAutobuses => operacionAutobuses.Nombre_autobus, unAutobus.Nombre_autobus));
 
             var totalUtilizaciones = await coleccionOperacionAutobuses
                 .Find(filtro)
-                .SortBy(operacionAutobuses => operacionAutobuses.Codigo_autobus)
+                .SortBy(operacionAutobuses => operacionAutobuses.Autobus_id)
                 .ToListAsync();
 
             return totalUtilizaciones.Count();
@@ -131,7 +131,7 @@ namespace ProgramacionTP_CS_API_Mongo.Repositories
 
                     var asignacion = new OperacionAutobus
                     {
-                        Codigo_autobus = resultado.Codigo_autobus,  // Asigna el ID del autobús
+                        Autobus_id = resultado.Autobus_id,  // Asigna el ID del autobús
                         Hora = horarioPico.Hora  // Asigna el ID del horario en horario pico
                     };
 
@@ -154,7 +154,7 @@ namespace ProgramacionTP_CS_API_Mongo.Repositories
         //    await coleccionAutobuses.InsertOneAsync(unAutobus);
 
         //    var resultado = await coleccionAutobuses
-        //            .Find(autobus => autobus.Codigo_autobus == unAutobus.Codigo_autobus)
+        //            .Find(autobus => autobus.Autobus_id == unAutobus.Autobus_id)
         //            .FirstOrDefaultAsync();
 
         //    if (resultado is not null)
@@ -170,7 +170,7 @@ namespace ProgramacionTP_CS_API_Mongo.Repositories
         //        {
         //            // Asignar el horario en horario pico al autobús
         //            resultado.Horario = horarioPico.Hora;
-        //            await coleccionAutobuses.ReplaceOneAsync(autobus => autobus.Codigo_autobus == resultado.Codigo_autobus, resultado);
+        //            await coleccionAutobuses.ReplaceOneAsync(autobus => autobus.Autobus_id == resultado.Autobus_id, resultado);
         //        }
         //    }
 
@@ -188,7 +188,7 @@ namespace ProgramacionTP_CS_API_Mongo.Repositories
             var coleccionAutobuses = conexion.GetCollection<Autobus>(contextoDB.configuracionColecciones.ColeccionAutobuses);
 
             var resultado = await coleccionAutobuses
-                .ReplaceOneAsync(autobus => autobus.Codigo_autobus == unAutobus.Codigo_autobus, unAutobus);
+                .ReplaceOneAsync(autobus => autobus.Autobus_id == unAutobus.Autobus_id, unAutobus);
 
             if (resultado.IsAcknowledged)
                 resultadoAccion = true;
@@ -204,7 +204,7 @@ namespace ProgramacionTP_CS_API_Mongo.Repositories
             var coleccionAutobuses = conexion.GetCollection<Autobus>(contextoDB.configuracionColecciones.ColeccionAutobuses);
 
             var resultado = await coleccionAutobuses
-                .DeleteOneAsync(autobus => autobus.Codigo_autobus == unAutobus.Codigo_autobus);
+                .DeleteOneAsync(autobus => autobus.Autobus_id == unAutobus.Autobus_id);
 
             if (resultado.IsAcknowledged)
                 resultadoAccion = true;

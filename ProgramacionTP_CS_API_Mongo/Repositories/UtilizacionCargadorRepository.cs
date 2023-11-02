@@ -24,7 +24,7 @@ namespace ProgramacionTP_CS_API_Mongo.Repositories
 
             var lasUtilizaciones = await coleccionUtilizacionCargadores
                 .Find(_ => true)
-                .SortBy(utilizacion => utilizacion.Codigo_autobus)
+                .SortBy(utilizacion => utilizacion.Autobus_id)
                 .ThenBy(utilizacion => utilizacion.Hora)
                 .ToListAsync();
 

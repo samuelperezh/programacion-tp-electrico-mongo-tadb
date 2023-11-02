@@ -45,13 +45,13 @@ namespace ProgramacionTP_CS_API_Mongo.Controllers
             }
         }
 
-        [HttpPut("{codigo_autobus:int}/{hora:int}")]
-        public async Task<IActionResult> UpdateAsync(int codigo_autobus, int hora, OperacionAutobus unaOperacionAutobus)
+        [HttpPut("{autobus_id:int}/{hora:int}")]
+        public async Task<IActionResult> UpdateAsync(int autobus_id, int hora, OperacionAutobus unaOperacionAutobus)
         {
             try
             {
                 var operacionAutobusActualizado = await _operacionAutobusService
-                    .UpdateAsync(codigo_autobus, hora, unaOperacionAutobus);
+                    .UpdateAsync(autobus_id, hora, unaOperacionAutobus);
 
                 return Ok(operacionAutobusActualizado);
 
@@ -66,15 +66,15 @@ namespace ProgramacionTP_CS_API_Mongo.Controllers
             }
         }
 
-        [HttpDelete("{codigo_autobus:int}/{hora:int}")]
-        public async Task<IActionResult> DeleteAsync(int codigo_autobus, int hora)
+        [HttpDelete("{autobus_id:int}/{hora:int}")]
+        public async Task<IActionResult> DeleteAsync(int autobus_id, int hora)
         {
             try
             {
                 await _operacionAutobusService
-                    .DeleteAsync(codigo_autobus, hora);
+                    .DeleteAsync(autobus_id, hora);
 
-                return Ok($"La operacion del autobus {codigo_autobus} en el horario {hora} fue eliminada");
+                return Ok($"La operacion del autobus {autobus_id} en el horario {hora} fue eliminada");
 
             }
             catch (AppValidationException error)

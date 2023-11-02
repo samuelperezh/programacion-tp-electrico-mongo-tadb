@@ -11,11 +11,6 @@ namespace ProgramacionTP_CS_API_Mongo.Models
         [JsonPropertyName("id")]
         public string? Id { get; set; } = string.Empty;
 
-        [BsonElement("codigo_cargador")]
-        [JsonPropertyName("codigo_cargador")]
-        [BsonRepresentation(BsonType.Int32)]
-        public int Codigo_cargador { get; set; } = 0;
-
         [BsonElement("nombre_cargador")]
         [JsonPropertyName("nombre_cargador")]
         [BsonRepresentation(BsonType.String)]
@@ -29,8 +24,7 @@ namespace ProgramacionTP_CS_API_Mongo.Models
             var otroCargador = (Cargador)obj;
 
             return Id == otroCargador.Id
-                && Nombre_cargador.Equals(otroCargador.Nombre_cargador)
-                && Codigo_cargador.Equals(otroCargador.Codigo_cargador);
+                && Nombre_cargador.Equals(otroCargador.Nombre_cargador);
         }
 
         public override int GetHashCode()
@@ -40,7 +34,6 @@ namespace ProgramacionTP_CS_API_Mongo.Models
                 int hash = 3;
                 hash = hash * 5 + (Id?.GetHashCode() ?? 0);
                 hash = hash * 5 + (Nombre_cargador?.GetHashCode() ?? 0);
-                hash = hash * 5 + Codigo_cargador.GetHashCode();
 
                 return hash;
             }
