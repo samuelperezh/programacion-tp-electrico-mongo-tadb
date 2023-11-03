@@ -91,7 +91,7 @@ db.createCollection("horarios", {
             }
          },
          propertyNames: {
-            description: "Orden de campos: hora, id, horario_pico"
+            description: "Orden de campos: hora, horario_pico"
          }
       }
    }
@@ -127,11 +127,11 @@ db.createCollection("operacion_autobuses", {
       $jsonSchema: {
          bsonType: "object",
          title: "Operación de Autobuses del Transporte Público Eléctrico",
-         required: ["codigo_autobus", "hora"],
+         required: ["autobus_id", "hora"],
          properties: {
-            codigo_autobus: {
+            autobus_id: {
                bsonType: "int",
-               description: "'codigo_autobus' Debe ser un número entero y no puede ser nulo"
+               description: "'autobus_id' Debe ser un número entero y no puede ser nulo"
             },
             hora: {
                bsonType: "int",
@@ -150,7 +150,7 @@ db.createCollection("operacion_autobuses", {
 db.autobuses.find({});
 
 --Todos los autobuses por id
-db.autobuses.find({codigo_autobus: 1});
+db.autobuses.find({autobus_id: 1});
 
 --Todos los autobuses por nombre
 db.autobuses.find({nombre_autobus: "Circular"});
@@ -159,7 +159,7 @@ db.autobuses.find({nombre_autobus: "Circular"});
 db.cargadores.find({});
 
 --Todos los cargadores por id
-db.cargadores.find({codigo_cargador: 1});
+db.cargadores.find({cargador_id: 1});
 
 --Todos los cargadores por nombre
 db.cargadores.find({nombre_cargador: "Cargador 1"});
@@ -177,7 +177,7 @@ db.horarios.find({horario_pico: true});
 db.operacion_autobuses.find({});
 
 --Todos las operaciones de los autobuses por id
-db.operacion_autobuses.find({codigo_autobus: 1});
+db.operacion_autobuses.find({autobus_id: 1});
 
 --Todos las operaciones de los autobuses por hora
 db.operacion_autobuses.find({hora: 1});
@@ -186,13 +186,13 @@ db.operacion_autobuses.find({hora: 1});
 db.utilizacion_cargadores.find({});
 
 --Todos las utilizaciones de los cargadores por id
-db.utilizacion_cargadores.find({codigo_cargador: 1});
+db.utilizacion_cargadores.find({cargador_id: 1});
 
 --Todos las utilizaciones de los cargadores por hora
 db.utilizacion_cargadores.find({hora: 1});
 
 --Todos las utilizaciones de los cargadores por autobus
-db.utilizacion_cargadores.find({codigo_autobus: 1});
+db.utilizacion_cargadores.find({autobus_id: 1});
 
 
 
