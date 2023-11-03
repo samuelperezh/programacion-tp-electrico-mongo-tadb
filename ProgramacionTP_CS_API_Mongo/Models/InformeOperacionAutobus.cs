@@ -8,6 +8,6 @@ namespace ProgramacionTP_CS_API_Mongo.Models
         public int Hora { get; set; } = 0;
 
         [JsonPropertyName("total_operacion_autobuses")]
-        public int Total_operacion_autobuses { get; set; } = 0;
+        public long Total_operacion_autobuses { get; set; } = 0;
     }
 }

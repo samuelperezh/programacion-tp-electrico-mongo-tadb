@@ -95,12 +95,12 @@ namespace ProgramacionTP_CS_API_Mongo.Repositories
                 builder.Eq(operacionAutobuses => operacionAutobuses.Autobus_id, unAutobus.Id),
                 builder.Eq(operacionAutobuses => operacionAutobuses.Nombre_autobus, unAutobus.Nombre_autobus));
 
-            var totalUtilizaciones = await coleccionOperacionAutobuses
+            var totalOperaciones = await coleccionOperacionAutobuses
                 .Find(filtro)
                 .SortBy(operacionAutobuses => operacionAutobuses.Autobus_id)
                 .ToListAsync();
 
-            return totalUtilizaciones.Count();
+            return totalOperaciones.Count();
         }
         public async Task<bool> CreateAsync(Autobus unAutobus)
         {
