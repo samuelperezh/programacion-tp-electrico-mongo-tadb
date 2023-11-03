@@ -103,15 +103,21 @@ namespace ProgramacionTP_CS_API_Mongo.Services
         public async Task<UtilizacionCargador> UpdateAsync(string cargador_id, string autobus_id, int hora, UtilizacionCargador unaUtilizacionCargador)
         {
             //Validamos que el cargador exista con ese Id
+            if (string.IsNullOrEmpty(unaUtilizacionCargador.Cargador_id))
+                throw new AppValidationException($"El id del cargador no puede ser nulo");
+
             var cargadorExistente = await _cargadorRepository
-                .GetByIdAsync(cargador_id);
+                .GetByIdAsync(unaUtilizacionCargador.Cargador_id);
 
             if (string.IsNullOrEmpty(cargadorExistente.Id))
                 throw new AppValidationException($"El cargador con id {cargadorExistente.Id} no se encuentra registrado");
 
             // Validamos que el autobus exista con ese Id
+            if (string.IsNullOrEmpty(unaUtilizacionCargador.Autobus_id))
+                throw new AppValidationException($"El id del autobus no puede ser nulo");
+
             var autobusExistente = await _autobusRepository
-                .GetByIdAsync(autobus_id);
+                .GetByIdAsync(unaUtilizacionCargador.Autobus_id);
 
             if (string.IsNullOrEmpty(autobusExistente.Id))
                 throw new AppValidationException($"El autobus con id {autobusExistente.Id} no se encuentra registrado");
@@ -153,13 +159,13 @@ namespace ProgramacionTP_CS_API_Mongo.Services
             return utilizacionCargadorExistente;
         }
 
-        public async Task DeleteAsync(int cargador_id, int autobus_id, int hora)
+        public async Task DeleteAsync(string cargador_id, string autobus_id, int hora)
         {
             // Validamos que la utilización del cargador a eliminar si exista previamente
             var utilizacionCargadorExistente = await _utilizacionCargadorRepository
                 .GetByUtilizationAsync(cargador_id, autobus_id, hora);
 
-            if (utilizacionCargadorExistente.Cargador_id == 0)
+            if (string.IsNullOrEmpty(utilizacionCargadorExistente.Cargador_id))
                 throw new AppValidationException($"No existe una utilización de cargador en el autobus {utilizacionCargadorExistente.Autobus_id}, en el cargador {utilizacionCargadorExistente.Cargador_id}, en la hora {utilizacionCargadorExistente.Hora}");
 
             //Si existe se puede eliminar

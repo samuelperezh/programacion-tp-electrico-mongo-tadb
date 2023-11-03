@@ -21,7 +21,7 @@ namespace ProgramacionTP_CS_API_Mongo.Services
 
         public async Task<InformeUtilizacionCargador> GetInformeUtilizacionByIdAsync(int hora)
         {
-            // Validamos que el informe operacion autobus exista
+            // Validamos que el informe utilizacion cargador exista
             var unInformeUtilizacionCargador = await _informeUtilizacionCargadorRepository
                 .GetInformeUtilizacionByIdAsync(hora);
 

@@ -29,7 +29,7 @@ namespace ProgramacionTP_CS_API_Mongo.Repositories
             return losCargadores;
         }
 
-        public async Task<Cargador> GetByIdAsync(int cargador_id)
+        public async Task<Cargador> GetByIdAsync(string cargador_id)
         {
             Cargador unCargador = new Cargador();
 
@@ -37,7 +37,7 @@ namespace ProgramacionTP_CS_API_Mongo.Repositories
             var coleccionCargadores = conexion.GetCollection<Cargador>(contextoDB.configuracionColecciones.ColeccionCargadores);
 
             var resultado = await coleccionCargadores
-                    .Find(cargador => cargador.Cargador_id == cargador_id)
+                    .Find(cargador => cargador.Id == cargador_id)
                     .FirstOrDefaultAsync();
             
             if (resultado is not null)
@@ -63,7 +63,7 @@ namespace ProgramacionTP_CS_API_Mongo.Repositories
             return unCargador;
         }
 
-        public async Task<int> GetTotalAssociatedChargerUtilizationAsync(int cargador_id)
+        public async Task<int> GetTotalAssociatedChargerUtilizationAsync(string cargador_id)
         {
             Cargador unCargador = await GetByIdAsync(cargador_id);
             
@@ -72,7 +72,7 @@ namespace ProgramacionTP_CS_API_Mongo.Repositories
 
             var builder = Builders<UtilizacionCargador>.Filter;
             var filtro = builder.And(
-                builder.Eq(utilizacionCargador => utilizacionCargador.Cargador_id, unCargador.Cargador_id),
+                builder.Eq(utilizacionCargador => utilizacionCargador.Cargador_id, unCargador.Id),
                 builder.Eq(utilizacionCargador => utilizacionCargador.Nombre_cargador, unCargador.Nombre_cargador));
 
             var totalUtilizaciones = await coleccionUtilizacionCargadores
@@ -107,7 +107,7 @@ namespace ProgramacionTP_CS_API_Mongo.Repositories
             var conexion = contextoDB.CreateConnection();
             var coleccionCargadores = conexion.GetCollection<Cargador>(contextoDB.configuracionColecciones.ColeccionCargadores);
 
-            var resultado = await coleccionCargadores.ReplaceOneAsync(cargador => cargador.Cargador_id == unCargador.Cargador_id, unCargador);
+            var resultado = await coleccionCargadores.ReplaceOneAsync(cargador => cargador.Id == unCargador.Id, unCargador);
 
             if (resultado.IsAcknowledged)
                 resultadoAccion = true;
@@ -122,7 +122,7 @@ namespace ProgramacionTP_CS_API_Mongo.Repositories
             var conexion = contextoDB.CreateConnection();
             var coleccionCargadores = conexion.GetCollection<Cargador>(contextoDB.configuracionColecciones.ColeccionCargadores);
 
-            var resultado = await coleccionCargadores.DeleteOneAsync(cargador => cargador.Cargador_id == unCargador.Cargador_id);
+            var resultado = await coleccionCargadores.DeleteOneAsync(cargador => cargador.Id == unCargador.Id);
 
             if (resultado.IsAcknowledged)
                 resultadoAccion = true;

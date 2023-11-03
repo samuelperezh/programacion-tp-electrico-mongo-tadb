@@ -24,37 +24,26 @@ namespace ProgramacionTP_CS_API_Mongo.Repositories
 
             var lasUtilizaciones = await coleccionUtilizacionCargadores
                 .Find(_ => true)
-                .SortBy(utilizacion => utilizacion.Autobus_id)
-                .ThenBy(utilizacion => utilizacion.Hora)
+                .SortBy(utilizacion => utilizacion.Hora)
+                .ThenBy(utilizacion => utilizacion.Autobus_id)
                 .ToListAsync();
 
             return lasUtilizaciones;
         }
 
-        public async Task<UtilizacionCargador> GetByUtilizationAsync(int cargador_id, int autobus_id, int horario_id)
+        public async Task<UtilizacionCargador> GetByUtilizationAsync(string cargador_id, string autobus_id, int hora)
         {
             UtilizacionCargador unaUtilizacionCargador = new UtilizacionCargador();
+            
+            var conexion = contextoDB.CreateConnection();
+            var coleccionUtilizacionCargadores = conexion.GetCollection<UtilizacionCargador>(contextoDB.configuracionColecciones.ColeccionUtilizacionCargadores); ;
 
-            using (var conexion = contextoDB.CreateConnection())
-            {
-                DynamicParameters parametrosSentencia = new DynamicParameters();
-                parametrosSentencia.Add("@cargador_id", cargador_id,
-                                        DbType.Int32, ParameterDirection.Input);
-                parametrosSentencia.Add("@autobus_id", autobus_id,
-                                        DbType.Int32, ParameterDirection.Input);
-                parametrosSentencia.Add("@horario_id", horario_id,
-                                        DbType.Int32, ParameterDirection.Input);
+            var resultado = await coleccionUtilizacionCargadores
+                .Find(utilizacion => utilizacion.Cargador_id == cargador_id && utilizacion.Autobus_id == autobus_id && utilizacion.Hora == hora)
+                .FirstOrDefaultAsync();
 
-                string sentenciaSQL = "SELECT cargador_id, autobus_id, horario_id " +
-                                      "FROM utilizacion_cargadores " +
-                                      "WHERE cargador_id = @cargador_id AND autobus_id= @autobus_id AND horario_id = @horario_id";
-
-                var resultado = await conexion.QueryAsync<UtilizacionCargador>(sentenciaSQL,
-                                    parametrosSentencia);
-
-                if (resultado.Count() > 0)
-                    unaUtilizacionCargador = resultado.First();
-            }
+            if (resultado is not null)
+                unaUtilizacionCargador = resultado;
 
             return unaUtilizacionCargador;
         }
@@ -63,42 +52,22 @@ namespace ProgramacionTP_CS_API_Mongo.Repositories
         {
             bool resultadoAccion = false;
 
-            try
+            if (string.IsNullOrEmpty(unaUtilizacionCargador.Autobus_id) == false && string.IsNullOrEmpty(unaUtilizacionCargador.Cargador_id) == false)
             {
-                using (var conexion = contextoDB.CreateConnection())
+                var conexion = contextoDB.CreateConnection();
+                var coleccionUtilizacionCargadores = conexion.GetCollection<UtilizacionCargador>(contextoDB.configuracionColecciones.ColeccionUtilizacionCargadores);
+
+                await coleccionUtilizacionCargadores.InsertOneAsync(unaUtilizacionCargador);
+
+                unaUtilizacionCargador.Hora += 1;
+                await coleccionUtilizacionCargadores.InsertOneAsync(unaUtilizacionCargador);
+
+                var resultado = await GetByUtilizationAsync(unaUtilizacionCargador.Cargador_id, unaUtilizacionCargador.Autobus_id, unaUtilizacionCargador.Hora);
+
+                if (resultado is not null)
                 {
-                    string procedimiento = "p_inserta_utilizacion_cargador";
-                    var parametros = new
-                    {
-                        p_cargador_id = unaUtilizacionCargador.Cargador_id,
-                        p_autobus_id = unaUtilizacionCargador.Autobus_id,
-                        p_horario_id = unaUtilizacionCargador.Horario_id
-                    };
-
-                    var cantidad_filas = await conexion.ExecuteAsync(
-                        procedimiento,
-                        parametros,
-                        commandType: CommandType.StoredProcedure);
-
-                    var parametros2 = new
-                    {
-                        p_cargador_id = unaUtilizacionCargador.Cargador_id,
-                        p_autobus_id = unaUtilizacionCargador.Autobus_id,
-                        p_horario_id = unaUtilizacionCargador.Horario_id+1
-                    };
-
-                    var cantidad_filas2 = await conexion.ExecuteAsync(
-                        procedimiento,
-                        parametros2,
-                        commandType: CommandType.StoredProcedure);
-
-                    if (cantidad_filas != 0)
-                        resultadoAccion = true;
+                    resultadoAccion = true;
                 }
-            }
-            catch (NpgsqlException error)
-            {
-                throw new DbOperationException(error.Message);
             }
 
             return resultadoAccion;
@@ -108,32 +77,14 @@ namespace ProgramacionTP_CS_API_Mongo.Repositories
         {
             bool resultadoAccion = false;
 
-            try
-            {
-                using (var conexion = contextoDB.CreateConnection())
-                {
-                    string procedimiento = "p_actualiza_utilizacion_cargador";
-                    var parametros = new
-                    {
-                        p_cargador_id = unaUtilizacionCargador.Cargador_id,
-                        p_autobus_id = unaUtilizacionCargador.Autobus_id,
-                        p_horario_id = unaUtilizacionCargador.Horario_id
-
-                    };
-
-                    var cantidad_filas = await conexion.ExecuteAsync(
-                        procedimiento,
-                        parametros,
-                        commandType: CommandType.StoredProcedure);
-
-                    if (cantidad_filas != 0)
-                        resultadoAccion = true;
-                }
-            }
-            catch (NpgsqlException error)
-            {
-                throw new DbOperationException(error.Message);
-            }
+            var conexion = contextoDB.CreateConnection();
+            var coleccionUtilizacionCargadores = conexion.GetCollection<UtilizacionCargador>(contextoDB.configuracionColecciones.ColeccionUtilizacionCargadores);
+            
+            var resultado = await coleccionUtilizacionCargadores.ReplaceOneAsync(
+                                utilizacion => utilizacion.Cargador_id == unaUtilizacionCargador.Cargador_id && utilizacion.Autobus_id == unaUtilizacionCargador.Autobus_id && utilizacion.Hora == unaUtilizacionCargador.Hora,
+                                                unaUtilizacionCargador);
+            if (resultado.IsAcknowledged)
+                resultadoAccion = true;
 
             return resultadoAccion;
         }
@@ -142,31 +93,14 @@ namespace ProgramacionTP_CS_API_Mongo.Repositories
         {
             bool resultadoAccion = false;
 
-            try
-            {
-                using (var conexion = contextoDB.CreateConnection())
-                {
-                    string procedimiento = "p_elimina_utilizacion_cargador";
-                    var parametros = new
-                    {
-                        p_cargador_id = unaUtilizacionCargador.Cargador_id,
-                        p_autobus_id = unaUtilizacionCargador.Autobus_id,
-                        p_horario_id = unaUtilizacionCargador.Horario_id
-                    };
+            var conexion = contextoDB.CreateConnection();
+            var coleccionUtilizacionCargadores = conexion.GetCollection<UtilizacionCargador>(contextoDB.configuracionColecciones.ColeccionUtilizacionCargadores);
 
-                    var cantidad_filas = await conexion.ExecuteAsync(
-                        procedimiento,
-                        parametros,
-                        commandType: CommandType.StoredProcedure);
+            var resultado = await coleccionUtilizacionCargadores.DeleteOneAsync(
+                                utilizacion => utilizacion.Cargador_id == unaUtilizacionCargador.Cargador_id && utilizacion.Autobus_id == unaUtilizacionCargador.Autobus_id && utilizacion.Hora == unaUtilizacionCargador.Hora);
 
-                    if (cantidad_filas != 0)
-                        resultadoAccion = true;
-                }
-            }
-            catch (NpgsqlException error)
-            {
-                throw new DbOperationException(error.Message);
-            }
+            if (resultado.IsAcknowledged)
+                resultadoAccion = true;
 
             return resultadoAccion;
         }

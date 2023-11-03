@@ -93,7 +93,7 @@ namespace ProgramacionTP_CS_API_Mongo.Repositories
         {
             bool resultadoAccion = false;
 
-            if (unaOperacionAutobus.Autobus_id != null && unaOperacionAutobus.Hora > 0)
+            if (string.IsNullOrEmpty(unaOperacionAutobus.Autobus_id) == false)
             {
                 var conexion = contextoDB.CreateConnection();
                 var coleccionOperacionAutobuses = conexion.GetCollection<OperacionAutobus>(contextoDB.configuracionColecciones.ColeccionOperacionAutobuses);

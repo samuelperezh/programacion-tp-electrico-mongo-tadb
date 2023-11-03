@@ -16,39 +16,40 @@ namespace ProgramacionTP_CS_API_Mongo.Repositories
         {
             contextoDB = unContexto;
         }
-        // public async Task<IEnumerable<InformeUtilizacionCargador>> GetInformeUtilizacionAsync()
-        // {
-        //     using (var conexion = contextoDB.CreateConnection())
-        //     {
-        //         string sentenciaSQL = "SELECT * FROM v_total_utilizacion_cargadores";
 
-        //         var unInformeUtilizacionCargador = await conexion.QueryAsync<InformeUtilizacionCargador>(sentenciaSQL,
-        //                                 new DynamicParameters());
+        public async Task<IEnumerable<InformeUtilizacionCargador>> GetInformeUtilizacionAsync()
+        {
+            var informes = new List<InformeUtilizacionCargador>();
 
-        //         return unInformeUtilizacionCargador;
-        //     }
-        // }
+            var conexion = contextoDB.CreateConnection();
 
-        // public async Task<InformeUtilizacionCargador> GetInformeUtilizacionByIdAsync(int hora)
-        // {
-        //     InformeUtilizacionCargador unInformeUtilizacionCargador = new InformeUtilizacionCargador();
+            var coleccionHorarios = conexion.GetCollection<Horario>(contextoDB.configuracionColecciones.ColeccionHorarios);
+            var coleccionUtilizacionCargadores = conexion.GetCollection<UtilizacionCargador>(contextoDB.configuracionColecciones.ColeccionUtilizacionCargadores);
 
-        //     using (var conexion = contextoDB.CreateConnection())
-        //     {
-        //         DynamicParameters parametrosSentencia = new DynamicParameters();
-        //         parametrosSentencia.Add("@hora", hora,
-        //                                 DbType.Int32, ParameterDirection.Input);
+            var horarios = await coleccionHorarios.Distinct(h => h.Hora, new BsonDocument()).ToListAsync();
 
-        //         string sentenciaSQL = "SELECT * FROM v_total_utilizacion_cargadores WHERE hora = @hora";
+            foreach (var hora in horarios)
+            {
+                var count = await coleccionUtilizacionCargadores.CountDocumentsAsync(uc => uc.Hora == hora);
+                informes.Add(new InformeUtilizacionCargador { Hora = hora, Total_utilizacion_cargadores = (int)count });
+            }
 
-        //         var resultado = await conexion.QueryAsync<InformeUtilizacionCargador>(sentenciaSQL,
-        //                             parametrosSentencia);
+            return informes;
+        }
 
-        //         if (resultado.Count() > 0)
-        //             unInformeUtilizacionCargador = resultado.First();
-        //     }
+        public async Task<InformeUtilizacionCargador> GetInformeUtilizacionByIdAsync(int hora)
+        {
+            var conexion = contextoDB.CreateConnection();
+            var coleccionUtilizacionCargadores = conexion.GetCollection<UtilizacionCargador>(contextoDB.configuracionColecciones.ColeccionUtilizacionCargadores);
 
-        //     return unInformeUtilizacionCargador;
-        // }
+            var count = await coleccionUtilizacionCargadores.CountDocumentsAsync(uc => uc.Hora == hora);
+
+            InformeUtilizacionCargador unInformeUtilizacionCargador = new InformeUtilizacionCargador();
+
+            unInformeUtilizacionCargador.Hora = hora;
+            unInformeUtilizacionCargador.Total_utilizacion_cargadores = (int)count;
+
+            return unInformeUtilizacionCargador;
+        }
     }
 }

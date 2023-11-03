@@ -1,9 +1,8 @@
-
 using ProgramacionTP_CS_API_Mongo.DbContexts;
 using ProgramacionTP_CS_API_Mongo.Interfaces;
 using ProgramacionTP_CS_API_Mongo.Models;
 
-namespace ProgramacionTP_CS_API_Mongo_Dapper.Repositories
+namespace ProgramacionTP_CS_API_Mongo.Repositories
 {
     public class InformeRepository : IInformeRepository
     {
@@ -18,42 +17,42 @@ namespace ProgramacionTP_CS_API_Mongo_Dapper.Repositories
         {
             Informe unInforme = new Informe();
             var conexion = contextoDB.CreateConnection();
-            {
-                //Total Horarios
-                var coleccionHorarios = conexion.GetCollection<Horario>(contextoDB.configuracionColecciones.ColeccionHorarios);
-                var totalHorarios = await coleccionHorarios
-                    .EstimatedDocumentCountAsync();
 
-                unInforme.Horarios = totalHorarios;
+            //Total Horarios
+            var coleccionHorarios = conexion.GetCollection<Horario>(contextoDB.configuracionColecciones.ColeccionHorarios);
+            var totalHorarios = await coleccionHorarios
+                .EstimatedDocumentCountAsync();
 
-                //Total cargadores
-                var coleccionCargadores = conexion.GetCollection<Cargador>(contextoDB.configuracionColecciones.ColeccionCargadores);
-                var totalCargadores = await coleccionCargadores
-                    .EstimatedDocumentCountAsync();
+            unInforme.Horarios = totalHorarios;
 
-                unInforme.Cargadores = totalCargadores;
+            //Total cargadores
+            var coleccionCargadores = conexion.GetCollection<Cargador>(contextoDB.configuracionColecciones.ColeccionCargadores);
+            var totalCargadores = await coleccionCargadores
+                .EstimatedDocumentCountAsync();
 
-                //Total autobuses
-                var coleccionAutobuses = conexion.GetCollection<Autobus>(contextoDB.configuracionColecciones.ColeccionAutobuses);
-                var totalAutobuses = await coleccionAutobuses
-                    .EstimatedDocumentCountAsync();
+            unInforme.Cargadores = totalCargadores;
 
-                unInforme.Autobuses = totalAutobuses;
+            //Total autobuses
+            var coleccionAutobuses = conexion.GetCollection<Autobus>(contextoDB.configuracionColecciones.ColeccionAutobuses);
+            var totalAutobuses = await coleccionAutobuses
+                .EstimatedDocumentCountAsync();
 
-                //Total operacion autobuses
-                var coleccionOperacionAutobuses = conexion.GetCollection<OperacionAutobus>(contextoDB.configuracionColecciones.ColeccionOperacionAutobuses);
-                var totalOperacionAutobuses = await coleccionOperacionAutobuses
-                    .EstimatedDocumentCountAsync();
+            unInforme.Autobuses = totalAutobuses;
 
-                unInforme.Operacion_autobuses = totalOperacionAutobuses;
+            //Total operacion autobuses
+            var coleccionOperacionAutobuses = conexion.GetCollection<OperacionAutobus>(contextoDB.configuracionColecciones.ColeccionOperacionAutobuses);
+            var totalOperacionAutobuses = await coleccionOperacionAutobuses
+                .EstimatedDocumentCountAsync();
 
-                //Total utilización cargadores
-                var coleccionUtilizacionCargadores = conexion.GetCollection<UtilizacionCargador>(contextoDB.configuracionColecciones.ColeccionUtilizacionCargadores);
-                var totalUtilizacionCargadores = await coleccionUtilizacionCargadores
-                    .EstimatedDocumentCountAsync();
+            unInforme.Operacion_autobuses = totalOperacionAutobuses;
 
-                unInforme.Utilizacion_cargadores = totalUtilizacionCargadores;
-            }
+            //Total utilizacion cargadores
+            var coleccionUtilizacionCargadores = conexion.GetCollection<UtilizacionCargador>(contextoDB.configuracionColecciones.ColeccionUtilizacionCargadores);
+            var totalUtilizacionCargadores = await coleccionUtilizacionCargadores
+                .EstimatedDocumentCountAsync();
+
+            unInforme.Utilizacion_cargadores = totalUtilizacionCargadores;
+
             return unInforme;
         }
     }
