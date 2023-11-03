@@ -47,19 +47,12 @@ db.createCollection("cargadores", {
       $jsonSchema: {
          bsonType: "object",
          title: "Cargadores de Buses del Transporte Público Eléctrico",
-         required: ["codigo_cargador", "nombre_cargador"],  
+         required: ["nombre_cargador"],  
          properties: {
-            codigo_cargador: {
-               bsonType: "int",  // Define el tipo como entero (int)
-               description: "'codigo_cargador' debe ser un entero y no puede ser nulo"
-            },
             nombre_cargador: {
                bsonType: "string",
                description: "'nombre_cargador' debe ser una cadena de caracteres y no puede ser nulo"
             }
-         },
-         propertyNames: {
-            description: "Orden de campos: codigo_cargador, nombre_cargador"
          }
       }
    }
@@ -71,19 +64,12 @@ db.createCollection("autobuses", {
       $jsonSchema: {
          bsonType: "object",
          title: "Autobuses del Transporte Público Eléctrico",
-         required: ["codigo_autobus", "nombre_autobus"],  
-         properties: {
-            codigo_autobus: {
-               bsonType: "int",  // Define el tipo como entero (int)
-               description: "'codigo_autobus' debe ser un entero y no puede ser nulo"
-            },
+         required: ["nombre_autobus"],  
+         properties: 
             nombre_autobus: {
                bsonType: "string",
                description: "'nombre_autobus' debe ser una cadena de caracteres y no puede ser nulo"
             }
-         },
-         propertyNames: {
-            description: "Orden de campos: codigo_autobus, nombre_autobus"
          }
       }
    }
@@ -116,15 +102,15 @@ db.createCollection("utilizacion_cargadores", {
       $jsonSchema: {
          bsonType: "object",
          title: "Utilización de Cargadores de Buses del Transporte Público Eléctrico",
-         required: ["codigo_cargador", "codigo_autobus", "hora"],  
+         required: ["cargador_id", "autobus_id", "hora"],  
          properties: {
-            codigo_cargador: {
-               bsonType: "int",
-               description: "'codigo_cargador' debe ser un número entero y no puede ser nulo"
+            cargador_id: {
+               bsonType: "string",
+               description: "'cargador_id' debe ser un número entero y no puede ser nulo"
             },
-            codigo_autobus: {
-               bsonType: "int",
-               description: "'codigo_autobus' debe ser un número entero y no puede ser nulo"
+            autobus_id: {
+               bsonType: "string",
+               description: "'autobus_id' debe ser un número entero y no puede ser nulo"
             },
             hora: {
                bsonType: "int",
