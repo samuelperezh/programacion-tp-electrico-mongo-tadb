@@ -25,8 +25,8 @@ namespace ProgramacionTP_CS_API_PostgreSQL_Dapper.Controllers
             return Ok(losAutobuses);
         }
 
-        [HttpGet("{autobus_id:int}")]
-        public async Task<IActionResult> GetByIdAsync(int autobus_id)
+        [HttpGet("{autobus_id:length(24)}")]
+        public async Task<IActionResult> GetByIdAsync(string autobus_id)
         {
             try
             {
@@ -60,8 +60,8 @@ namespace ProgramacionTP_CS_API_PostgreSQL_Dapper.Controllers
             }
         }
 
-        [HttpPut("{autobus_id:int}")]
-        public async Task<IActionResult> UpdateAsync(int autobus_id, Autobus unAutobus)
+        [HttpPut("{autobus_id:length(24)}")]
+        public async Task<IActionResult> UpdateAsync(string autobus_id, Autobus unAutobus)
         {
             try
             {
@@ -81,8 +81,8 @@ namespace ProgramacionTP_CS_API_PostgreSQL_Dapper.Controllers
             }
         }
 
-        [HttpDelete("{autobus_id:int}")]
-        public async Task<IActionResult> DeleteAsync(int autobus_id)
+        [HttpDelete("{autobus_id:length(24)}")]
+        public async Task<IActionResult> DeleteAsync(string autobus_id)
         {
             try
             {

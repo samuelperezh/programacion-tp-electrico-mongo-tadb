@@ -29,7 +29,7 @@ namespace ProgramacionTP_CS_API_Mongo.Repositories
                 return losAutobuses;
         }
 
-        public async Task<Autobus> GetByIdAsync(int autobus_id)
+        public async Task<Autobus> GetByIdAsync(string autobus_id)
         {
             Autobus unAutobus = new Autobus();
 
@@ -37,7 +37,7 @@ namespace ProgramacionTP_CS_API_Mongo.Repositories
             var coleccionAutobuses = conexion.GetCollection<Autobus>(contextoDB.configuracionColecciones.ColeccionAutobuses);
 
             var resultado = await coleccionAutobuses
-                    .Find(autobus => autobus.Autobus_id == autobus_id)
+                    .Find(autobus => autobus.Id == autobus_id)
                     .FirstOrDefaultAsync();
 
             if (resultado is not null)
@@ -63,7 +63,7 @@ namespace ProgramacionTP_CS_API_Mongo.Repositories
             return unAutobus;
         }
 
-        public async Task<int> GetTotalAssociatedChargerUtilizationAsync(int autobus_id)
+        public async Task<int> GetTotalAssociatedChargerUtilizationAsync(string autobus_id)
         {
             Autobus unAutobus = await GetByIdAsync(autobus_id);
             
@@ -72,7 +72,7 @@ namespace ProgramacionTP_CS_API_Mongo.Repositories
 
             var builder = Builders<UtilizacionCargador>.Filter;
             var filtro = builder.And(
-                builder.Eq(utilizacionCargador => utilizacionCargador.Autobus_id, unAutobus.Autobus_id),
+                builder.Eq(utilizacionCargador => utilizacionCargador.Autobus_id, unAutobus.Id),
                 builder.Eq(utilizacionCargador => utilizacionCargador.Nombre_autobus, unAutobus.Nombre_autobus));
 
             var totalUtilizaciones = await coleccionUtilizacionCargadores
@@ -83,7 +83,7 @@ namespace ProgramacionTP_CS_API_Mongo.Repositories
             return totalUtilizaciones.Count();
         }
 
-        public async Task<int> GetTotalAssociatedAutobusOperationAsync(int autobus_id)
+        public async Task<int> GetTotalAssociatedAutobusOperationAsync(string autobus_id)
         {
             Autobus unAutobus = await GetByIdAsync(autobus_id);
             
@@ -92,7 +92,7 @@ namespace ProgramacionTP_CS_API_Mongo.Repositories
 
             var builder = Builders<OperacionAutobus>.Filter;
             var filtro = builder.And(
-                builder.Eq(operacionAutobuses => operacionAutobuses.Autobus_id, unAutobus.Autobus_id),
+                builder.Eq(operacionAutobuses => operacionAutobuses.Autobus_id, unAutobus.Id),
                 builder.Eq(operacionAutobuses => operacionAutobuses.Nombre_autobus, unAutobus.Nombre_autobus));
 
             var totalUtilizaciones = await coleccionOperacionAutobuses
@@ -131,7 +131,7 @@ namespace ProgramacionTP_CS_API_Mongo.Repositories
 
                     var asignacion = new OperacionAutobus
                     {
-                        Autobus_id = resultado.Autobus_id,  // Asigna el ID del autobús
+                        Autobus_id = resultado.Id,  // Asigna el ID del autobús
                         Hora = horarioPico.Hora  // Asigna el ID del horario en horario pico
                     };
 
@@ -188,7 +188,7 @@ namespace ProgramacionTP_CS_API_Mongo.Repositories
             var coleccionAutobuses = conexion.GetCollection<Autobus>(contextoDB.configuracionColecciones.ColeccionAutobuses);
 
             var resultado = await coleccionAutobuses
-                .ReplaceOneAsync(autobus => autobus.Autobus_id == unAutobus.Autobus_id, unAutobus);
+                .ReplaceOneAsync(autobus => autobus.Id == unAutobus.Id, unAutobus);
 
             if (resultado.IsAcknowledged)
                 resultadoAccion = true;
@@ -204,7 +204,7 @@ namespace ProgramacionTP_CS_API_Mongo.Repositories
             var coleccionAutobuses = conexion.GetCollection<Autobus>(contextoDB.configuracionColecciones.ColeccionAutobuses);
 
             var resultado = await coleccionAutobuses
-                .DeleteOneAsync(autobus => autobus.Autobus_id == unAutobus.Autobus_id);
+                .DeleteOneAsync(autobus => autobus.Id == unAutobus.Id);
 
             if (resultado.IsAcknowledged)
                 resultadoAccion = true;
