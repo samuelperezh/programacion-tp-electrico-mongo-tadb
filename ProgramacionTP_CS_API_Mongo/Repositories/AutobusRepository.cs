@@ -25,8 +25,8 @@ namespace ProgramacionTP_CS_API_Mongo.Repositories
                     .Find(_ => true)
                     .SortBy(autobus => autobus.Nombre_autobus)
                     .ToListAsync();
-            
-                return losAutobuses;
+
+            return losAutobuses;
         }
 
         public async Task<Autobus> GetByIdAsync(string autobus_id)
@@ -143,42 +143,6 @@ namespace ProgramacionTP_CS_API_Mongo.Repositories
             // Aquí siempre debes tener una sentencia de retorno
             return resultadoAccion;
         }
-
-        //public async Task<bool> CreateAsync(Autobus unAutobus)
-        //{
-        //    bool resultadoAccion = false;
-
-        //    var conexion = contextoDB.CreateConnection();
-        //    var coleccionAutobuses = conexion.GetCollection<Autobus>(contextoDB.configuracionColecciones.ColeccionAutobuses);
-
-        //    await coleccionAutobuses.InsertOneAsync(unAutobus);
-
-        //    var resultado = await coleccionAutobuses
-        //            .Find(autobus => autobus.Autobus_id == unAutobus.Autobus_id)
-        //            .FirstOrDefaultAsync();
-
-        //    if (resultado is not null)
-        //    {
-        //        var coleccionHorarios = conexion.GetCollection<Horario>(contextoDB.configuracionColecciones.ColeccionHorarios);
-
-        //        // Buscar un horario en horario pico (cualquier criterio que indique horario pico)
-        //        var horarioPico = await coleccionHorarios
-        //            .Find(horario => horario.Horario_pico == true)
-        //            .FirstOrDefaultAsync();
-
-        //        if (horarioPico != null)
-        //        {
-        //            // Asignar el horario en horario pico al autobús
-        //            resultado.Horario = horarioPico.Hora;
-        //            await coleccionAutobuses.ReplaceOneAsync(autobus => autobus.Autobus_id == resultado.Autobus_id, resultado);
-        //        }
-        //    }
-
-        //    if (resultado == null)
-        //        resultadoAccion = true;
-
-        //    return resultadoAccion;
-        //}
 
         public async Task<bool> UpdateAsync(Autobus unAutobus)
         {
