@@ -1,0 +1,90 @@
+[{
+  "_id": {
+    "$oid": "654590b6e6de52eb6d03864a"
+  },
+  "nombre_cargador": "Cargador 1"
+},
+{
+  "_id": {
+    "$oid": "654590b6e6de52eb6d03864b"
+  },
+  "nombre_cargador": "Cargador 2"
+},
+{
+  "_id": {
+    "$oid": "654590b6e6de52eb6d03864c"
+  },
+  "nombre_cargador": "Cargador 3"
+},
+{
+  "_id": {
+    "$oid": "654590b6e6de52eb6d03864d"
+  },
+  "nombre_cargador": "Cargador 4"
+},
+{
+  "_id": {
+    "$oid": "654590b6e6de52eb6d03864e"
+  },
+  "nombre_cargador": "Cargador 5"
+},
+{
+  "_id": {
+    "$oid": "654590b6e6de52eb6d03864f"
+  },
+  "nombre_cargador": "Cargador 6"
+},
+{
+  "_id": {
+    "$oid": "654590b6e6de52eb6d038650"
+  },
+  "nombre_cargador": "Cargador 7"
+},
+{
+  "_id": {
+    "$oid": "654590b6e6de52eb6d038651"
+  },
+  "nombre_cargador": "Cargador 8"
+},
+{
+  "_id": {
+    "$oid": "654590b6e6de52eb6d038652"
+  },
+  "nombre_cargador": "Cargador 9"
+},
+{
+  "_id": {
+    "$oid": "654590b6e6de52eb6d038653"
+  },
+  "nombre_cargador": "Cargador 10"
+},
+{
+  "_id": {
+    "$oid": "654590b6e6de52eb6d038654"
+  },
+  "nombre_cargador": "Cargador 11"
+},
+{
+  "_id": {
+    "$oid": "654590b6e6de52eb6d038655"
+  },
+  "nombre_cargador": "Cargador 12"
+},
+{
+  "_id": {
+    "$oid": "654590b6e6de52eb6d038656"
+  },
+  "nombre_cargador": "Cargador 13"
+},
+{
+  "_id": {
+    "$oid": "654590b6e6de52eb6d038657"
+  },
+  "nombre_cargador": "Cargador 14"
+},
+{
+  "_id": {
+    "$oid": "654590b6e6de52eb6d038658"
+  },
+  "nombre_cargador": "Cargador 15"
+}]

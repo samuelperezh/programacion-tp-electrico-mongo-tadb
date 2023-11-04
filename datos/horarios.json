@@ -1,0 +1,168 @@
+[{
+  "_id": {
+    "$oid": "65459110e6de52eb6d038672"
+  },
+  "hora": 0,
+  "horario_pico": false
+},
+{
+  "_id": {
+    "$oid": "65459110e6de52eb6d038673"
+  },
+  "hora": 1,
+  "horario_pico": false
+},
+{
+  "_id": {
+    "$oid": "65459110e6de52eb6d038674"
+  },
+  "hora": 2,
+  "horario_pico": false
+},
+{
+  "_id": {
+    "$oid": "65459110e6de52eb6d038675"
+  },
+  "hora": 3,
+  "horario_pico": false
+},
+{
+  "_id": {
+    "$oid": "65459110e6de52eb6d038676"
+  },
+  "hora": 4,
+  "horario_pico": false
+},
+{
+  "_id": {
+    "$oid": "65459110e6de52eb6d038677"
+  },
+  "hora": 5,
+  "horario_pico": true
+},
+{
+  "_id": {
+    "$oid": "65459110e6de52eb6d038678"
+  },
+  "hora": 6,
+  "horario_pico": true
+},
+{
+  "_id": {
+    "$oid": "65459110e6de52eb6d038679"
+  },
+  "hora": 7,
+  "horario_pico": true
+},
+{
+  "_id": {
+    "$oid": "65459110e6de52eb6d03867a"
+  },
+  "hora": 8,
+  "horario_pico": true
+},
+{
+  "_id": {
+    "$oid": "65459110e6de52eb6d03867b"
+  },
+  "hora": 9,
+  "horario_pico": false
+},
+{
+  "_id": {
+    "$oid": "65459110e6de52eb6d03867c"
+  },
+  "hora": 10,
+  "horario_pico": false
+},
+{
+  "_id": {
+    "$oid": "65459110e6de52eb6d03867d"
+  },
+  "hora": 11,
+  "horario_pico": false
+},
+{
+  "_id": {
+    "$oid": "65459110e6de52eb6d03867e"
+  },
+  "hora": 12,
+  "horario_pico": false
+},
+{
+  "_id": {
+    "$oid": "65459110e6de52eb6d03867f"
+  },
+  "hora": 13,
+  "horario_pico": false
+},
+{
+  "_id": {
+    "$oid": "65459110e6de52eb6d038680"
+  },
+  "hora": 14,
+  "horario_pico": false
+},
+{
+  "_id": {
+    "$oid": "65459110e6de52eb6d038681"
+  },
+  "hora": 15,
+  "horario_pico": false
+},
+{
+  "_id": {
+    "$oid": "65459110e6de52eb6d038682"
+  },
+  "hora": 16,
+  "horario_pico": true
+},
+{
+  "_id": {
+    "$oid": "65459110e6de52eb6d038683"
+  },
+  "hora": 17,
+  "horario_pico": true
+},
+{
+  "_id": {
+    "$oid": "65459110e6de52eb6d038684"
+  },
+  "hora": 18,
+  "horario_pico": true
+},
+{
+  "_id": {
+    "$oid": "65459110e6de52eb6d038685"
+  },
+  "hora": 19,
+  "horario_pico": true
+},
+{
+  "_id": {
+    "$oid": "65459110e6de52eb6d038686"
+  },
+  "hora": 20,
+  "horario_pico": false
+},
+{
+  "_id": {
+    "$oid": "65459110e6de52eb6d038687"
+  },
+  "hora": 21,
+  "horario_pico": false
+},
+{
+  "_id": {
+    "$oid": "65459110e6de52eb6d038688"
+  },
+  "hora": 22,
+  "horario_pico": false
+},
+{
+  "_id": {
+    "$oid": "65459110e6de52eb6d038689"
+  },
+  "hora": 23,
+  "horario_pico": false
+}]

@@ -1,0 +1,72 @@
+[{
+  "_id": {
+    "$oid": "654590ace6de52eb6d03863d"
+  },
+  "nombre_autobus": "Envigado"
+},
+{
+  "_id": {
+    "$oid": "654590ace6de52eb6d03863e"
+  },
+  "nombre_autobus": "La Estrella"
+},
+{
+  "_id": {
+    "$oid": "654590ace6de52eb6d03863f"
+  },
+  "nombre_autobus": "Circular Coonatra"
+},
+{
+  "_id": {
+    "$oid": "654590ace6de52eb6d038640"
+  },
+  "nombre_autobus": "Circular Sur"
+},
+{
+  "_id": {
+    "$oid": "654590ace6de52eb6d038641"
+  },
+  "nombre_autobus": "Santra Belén"
+},
+{
+  "_id": {
+    "$oid": "654590ace6de52eb6d038642"
+  },
+  "nombre_autobus": "Metro Exposiciones"
+},
+{
+  "_id": {
+    "$oid": "654590ace6de52eb6d038643"
+  },
+  "nombre_autobus": "Metro San Antonio"
+},
+{
+  "_id": {
+    "$oid": "654590ace6de52eb6d038644"
+  },
+  "nombre_autobus": "Metro San Javier"
+},
+{
+  "_id": {
+    "$oid": "654590ace6de52eb6d038645"
+  },
+  "nombre_autobus": "Metro Acevedo"
+},
+{
+  "_id": {
+    "$oid": "654590ace6de52eb6d038646"
+  },
+  "nombre_autobus": "Metro Itagüí"
+},
+{
+  "_id": {
+    "$oid": "654590ace6de52eb6d038647"
+  },
+  "nombre_autobus": "Metro La Estrella"
+},
+{
+  "_id": {
+    "$oid": "654590ace6de52eb6d038648"
+  },
+  "nombre_autobus": "Metro Sabaneta"
+}]
