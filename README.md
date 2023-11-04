@@ -15,7 +15,7 @@ requerimientos mínimos de operación del servicio.
 
 ## Instructivo de compilación y ejecución de la solución del proyecto
 ### API
-#### [ProgramacionTP_CS_API_Mongo](https://github.com/samuelperezh/tadb_202320_ex04/tree/main/ProgramacionTP_CS_API_Mongo/ProgramacionTP_CS_API_Mongo)
+#### [ProgramacionTP_CS_API_Mongo](https://github.com/samuelperezh/tadb_202320_ex04/tree/main/ProgramacionTP_CS_API_Mongo)
 - WebAPI en C# con framework .NET 7.x implementando **Patrón Repositorio** con capa de persistencia de datos en MongoDb con operaciones CRUD.
 
 Para la ejecución, se debe usar un software que permita realizar las peticiones GET, POST, PUT y DEL de la API. En este caso, se usó Postman para este propósito.
