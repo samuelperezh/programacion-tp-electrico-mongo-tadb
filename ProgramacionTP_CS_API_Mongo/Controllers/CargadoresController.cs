@@ -25,8 +25,8 @@ namespace ProgramacionTP_CS_API_Mongo.Controllers
             return Ok(losCargadores);
         }
 
-        [HttpGet("{cargador_id:int}")]
-        public async Task<IActionResult> GetByIdAsync(int cargador_id)
+        [HttpGet("{cargador_id}")]
+        public async Task<IActionResult> GetByIdAsync(string cargador_id)
         {
             try
             {
@@ -60,8 +60,8 @@ namespace ProgramacionTP_CS_API_Mongo.Controllers
             }
         }
 
-        [HttpPut("{cargador_id:int}")]
-        public async Task<IActionResult> UpdateAsync(int cargador_id, Cargador unCargador)
+        [HttpPut("{cargador_id}")]
+        public async Task<IActionResult> UpdateAsync(string cargador_id, Cargador unCargador)
         {
             try
             {
@@ -81,8 +81,8 @@ namespace ProgramacionTP_CS_API_Mongo.Controllers
             }
         }
 
-        [HttpDelete("{cargador_id:int}")]
-        public async Task<IActionResult> DeleteAsync(int cargador_id)
+        [HttpDelete("{cargador_id}")]
+        public async Task<IActionResult> DeleteAsync(string cargador_id)
         {
             try
             {

@@ -45,7 +45,7 @@ namespace ProgramacionTP_CS_API_Mongo.Controllers
             }
         }
 
-        [HttpPut("{autobus_id:length(24)}/{hora:int}")]
+        [HttpPut("{autobus_id}/{hora:int}")]
         public async Task<IActionResult> UpdateAsync(string autobus_id, int hora, OperacionAutobus unaOperacionAutobus)
         {
             try
@@ -66,7 +66,7 @@ namespace ProgramacionTP_CS_API_Mongo.Controllers
             }
         }
 
-        [HttpDelete("{autobus_id:length(24)}/{hora:int}")]
+        [HttpDelete("{autobus_id}/{hora:int}")]
         public async Task<IActionResult> DeleteAsync(string autobus_id, int hora)
         {
             try

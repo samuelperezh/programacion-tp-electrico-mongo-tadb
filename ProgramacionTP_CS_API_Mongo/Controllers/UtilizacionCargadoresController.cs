@@ -45,8 +45,8 @@ namespace ProgramacionTB_CS_API_Mongo.Controllers
             }
         }
 
-        [HttpPut("{cargador_id:int}/{autobus_id:int}/{hora:int}")]
-        public async Task<IActionResult> UpdateAsync(int cargador_id, int autobus_id, int hora, UtilizacionCargador unaUtilizacionCargador)
+        [HttpPut("{cargador_id}/{autobus_id}/{hora:int}")]
+        public async Task<IActionResult> UpdateAsync(string cargador_id, string autobus_id, int hora, UtilizacionCargador unaUtilizacionCargador)
         {
             try
             {
@@ -66,8 +66,8 @@ namespace ProgramacionTB_CS_API_Mongo.Controllers
             }
         }
 
-        [HttpDelete("{cargador_id:int}/{autobus_id:int}/{hora:int}")]
-        public async Task<IActionResult> DeleteAsync(int cargador_id, int autobus_id, int hora)
+        [HttpDelete("{cargador_id}/{autobus_id}/{hora:int}")]
+        public async Task<IActionResult> DeleteAsync(string cargador_id, string autobus_id, int hora)
         {
             try
             {

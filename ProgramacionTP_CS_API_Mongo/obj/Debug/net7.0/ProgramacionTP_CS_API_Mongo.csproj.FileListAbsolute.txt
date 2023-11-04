@@ -1,7 +1,0 @@
-/workspaces/tadb_202320_ex04/ProgramacionTP_CS_API_Mongo/obj/Debug/net7.0/ProgramacionTP_CS_API_Mongo.csproj.AssemblyReference.cache
-/workspaces/tadb_202320_ex04/ProgramacionTP_CS_API_Mongo/obj/Debug/net7.0/ProgramacionTP_CS_API_Mongo.GeneratedMSBuildEditorConfig.editorconfig
-/workspaces/tadb_202320_ex04/ProgramacionTP_CS_API_Mongo/obj/Debug/net7.0/ProgramacionTP_CS_API_Mongo.AssemblyInfoInputs.cache
-/workspaces/tadb_202320_ex04/ProgramacionTP_CS_API_Mongo/obj/Debug/net7.0/ProgramacionTP_CS_API_Mongo.AssemblyInfo.cs
-/workspaces/tadb_202320_ex04/ProgramacionTP_CS_API_Mongo/obj/Debug/net7.0/ProgramacionTP_CS_API_Mongo.csproj.CoreCompileInputs.cache
-/workspaces/tadb_202320_ex04/ProgramacionTP_CS_API_Mongo/obj/Debug/net7.0/ProgramacionTP_CS_API_Mongo.MvcApplicationPartsAssemblyInfo.cs
-/workspaces/tadb_202320_ex04/ProgramacionTP_CS_API_Mongo/obj/Debug/net7.0/ProgramacionTP_CS_API_Mongo.MvcApplicationPartsAssemblyInfo.cache

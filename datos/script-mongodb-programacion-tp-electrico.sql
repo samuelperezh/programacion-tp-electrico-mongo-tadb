@@ -65,7 +65,7 @@ db.createCollection("autobuses", {
          bsonType: "object",
          title: "Autobuses del Transporte Público Eléctrico",
          required: ["nombre_autobus"],  
-         properties: 
+         properties: {
             nombre_autobus: {
                bsonType: "string",
                description: "'nombre_autobus' debe ser una cadena de caracteres y no puede ser nulo"
@@ -80,18 +80,15 @@ db.createCollection("horarios", {
       $jsonSchema: {
          bsonType: "object",
          title: "Horarios de Operación del Transporte Público Eléctrico",
-         required: ["hora", "horario_pico"],  // Incluye el nuevo campo "hora" antes de "horario_pico"
+         required: ["hora", "horario_pico"],  -- Incluye el nuevo campo "hora" antes de "horario_pico"
          properties: {
             hora: {
-               bsonType: "int",  // Define el tipo como entero int para "hora"
+               bsonType: "int",  -- Define el tipo como entero int para "hora"
                description: "'hora' debe ser un número entero y no puede ser nulo"
             },
             horario_pico: {
                description: "'horario_pico' debe ser un valor booleano (true o false) y no puede ser nulo"
             }
-         },
-         propertyNames: {
-            description: "Orden de campos: hora, horario_pico"
          }
       }
    }
@@ -106,11 +103,11 @@ db.createCollection("utilizacion_cargadores", {
          properties: {
             cargador_id: {
                bsonType: "string",
-               description: "'cargador_id' debe ser un número entero y no puede ser nulo"
+               description: "'cargador_id' debe ser un string y no puede ser nulo"
             },
             autobus_id: {
                bsonType: "string",
-               description: "'autobus_id' debe ser un número entero y no puede ser nulo"
+               description: "'autobus_id' debe ser un string y no puede ser nulo"
             },
             hora: {
                bsonType: "int",
@@ -121,7 +118,6 @@ db.createCollection("utilizacion_cargadores", {
    }
 });
 
-
 db.createCollection("operacion_autobuses", {
    validator: {
       $jsonSchema: {
@@ -130,12 +126,12 @@ db.createCollection("operacion_autobuses", {
          required: ["autobus_id", "hora"],
          properties: {
             autobus_id: {
-               bsonType: "int",
-               description: "'autobus_id' Debe ser un número entero y no puede ser nulo"
+               bsonType: "string",
+               description: "'autobus_id' debe ser un string y no puede ser nulo"
             },
             hora: {
                bsonType: "int",
-               description: "'hora' Debe ser un número entero y no puede ser nulo"
+               description: "'hora' debe ser un número entero y no puede ser nulo"
             }
          }
       }
@@ -193,7 +189,3 @@ db.utilizacion_cargadores.find({hora: 1});
 
 --Todos las utilizaciones de los cargadores por autobus
 db.utilizacion_cargadores.find({autobus_id: 1});
-
-
-
-
