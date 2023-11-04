@@ -58,7 +58,6 @@ db.createCollection("cargadores", {
    }
 });
 
-
 db.createCollection("autobuses", {
    validator: {
       $jsonSchema: {
@@ -80,10 +79,10 @@ db.createCollection("horarios", {
       $jsonSchema: {
          bsonType: "object",
          title: "Horarios de Operación del Transporte Público Eléctrico",
-         required: ["hora", "horario_pico"],  -- Incluye el nuevo campo "hora" antes de "horario_pico"
+         required: ["hora", "horario_pico"],
          properties: {
             hora: {
-               bsonType: "int",  -- Define el tipo como entero int para "hora"
+               bsonType: "int",
                description: "'hora' debe ser un número entero y no puede ser nulo"
             },
             horario_pico: {
