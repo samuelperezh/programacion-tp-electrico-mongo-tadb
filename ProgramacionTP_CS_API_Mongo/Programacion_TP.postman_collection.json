@@ -1,0 +1,456 @@
+{
+	"info": {
+		"_postman_id": "ffabb4db-6185-4c69-b6e4-1111a5560e46",
+		"name": "Programacion_TP",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29591469",
+		"_collection_link": "https://programaciontb202302.postman.co/workspace/New-Team-Workspace~86beb099-8798-4201-805a-fcf9f333e296/collection/29591469-ffabb4db-6185-4c69-b6e4-1111a5560e46?action=share&source=collection_link&creator=29591469"
+	},
+	"item": [
+		{
+			"name": "Informe_GET",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:7024/api/Informe",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7024",
+					"path": [
+						"api",
+						"Informe"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "InformeHorario_GET",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:7024/api/InformeHora/8",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7024",
+					"path": [
+						"api",
+						"InformeHora",
+						"8"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "InformeOperacionAutobuses_GET",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:7024/api/InformeOperacionAutobus/5",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7024",
+					"path": [
+						"api",
+						"InformeOperacionAutobus",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "InformeUtilizacionCargadores_GET",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:7024/api/InformeUtilizacionCargadores/25",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7024",
+					"path": [
+						"api",
+						"InformeUtilizacionCargadores",
+						"25"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Horarios_GET",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:7024/api/Horarios",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7024",
+					"path": [
+						"api",
+						"Horarios"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cargadores_GET",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:7024/api/Cargadores",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7024",
+					"path": [
+						"api",
+						"Cargadores"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Autobuses_GET",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:7024/api/Autobuses",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7024",
+					"path": [
+						"api",
+						"Autobuses"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "OperacionAutobuses_GET",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:7024/api/OperacionAutobuses",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7024",
+					"path": [
+						"api",
+						"OperacionAutobuses"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UtilizacionCargadores_GET",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:7024/api/UtilizacionCargadores",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7024",
+					"path": [
+						"api",
+						"UtilizacionCargadores"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cargadores_POST",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:7024/api/Cargadores/?nombre_cargador=Cargador 2",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7024",
+					"path": [
+						"api",
+						"Cargadores",
+						""
+					],
+					"query": [
+						{
+							"key": "nombre_cargador",
+							"value": "Cargador 2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Autobuses_POST",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:7024/api/Autobuses",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7024",
+					"path": [
+						"api",
+						"Autobuses"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "OperacionAutobuses_POST",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:7024/api/OperacionAutobuses",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7024",
+					"path": [
+						"api",
+						"OperacionAutobuses"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UtilizacionCargadores_POST",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Cargador_id\": 1,\r\n    \"Autobus_id\": 2,\r\n    \"Horario_id\": 11\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7024/api/UtilizacionCargadores",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7024",
+					"path": [
+						"api",
+						"UtilizacionCargadores"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cargadores_PUT",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": " {\r\n        \"Id\": 2,\r\n        \"Nombre_cargador\": \"Cargador 2\"\r\n    },",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7024/api/Cargadores",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7024",
+					"path": [
+						"api",
+						"Cargadores"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Autobuses_PUT",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:7024/api/Autobuses",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7024",
+					"path": [
+						"api",
+						"Autobuses"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "OperacionAutobuses_PUT",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:7024/api/OperacionAutobuses",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7024",
+					"path": [
+						"api",
+						"OperacionAutobuses"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UtilizacionCargadores_PUT",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:7024/api/UtilizacionCargadores",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7024",
+					"path": [
+						"api",
+						"UtilizacionCargadores"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cargadores_DEL",
+			"request": {
+				"method": "DELETE",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Autobuses_DEL",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:7024/api/Autobuses",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7024",
+					"path": [
+						"api",
+						"Autobuses"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "OperacionAutobuses_DEL",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7024/api/OperacionAutobuses",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7024",
+					"path": [
+						"api",
+						"OperacionAutobuses"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UtilizacionCargadores_DEL",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:7024/api/UtilizacionCargadores",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7024",
+					"path": [
+						"api",
+						"UtilizacionCargadores"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
