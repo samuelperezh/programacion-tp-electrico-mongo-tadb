@@ -21,14 +21,26 @@ namespace ProgramacionTP_CS_API_Mongo.Repositories
         {
             var conexion = contextoDB.CreateConnection();
             var coleccionUtilizacionCargadores = conexion.GetCollection<UtilizacionCargador>(contextoDB.configuracionColecciones.ColeccionUtilizacionCargadores);
+            var coleccionAutobuses = conexion.GetCollection<Autobus>(contextoDB.configuracionColecciones.ColeccionAutobuses);
+            var coleccionCargadores = conexion.GetCollection<Cargador>(contextoDB.configuracionColecciones.ColeccionCargadores);
 
-            var lasUtilizaciones = await coleccionUtilizacionCargadores
-                .Find(_ => true)
-                .SortBy(utilizacion => utilizacion.Hora)
-                .ThenBy(utilizacion => utilizacion.Autobus_id)
-                .ToListAsync();
+            var lasUtilizaciones = await coleccionUtilizacionCargadores.Find(_ => true).ToListAsync();
+            var losAutobuses = await coleccionAutobuses.Find(_ => true).ToListAsync();
+            var losCargadores = await coleccionCargadores.Find(_ => true).ToListAsync();
 
-            return lasUtilizaciones;
+            var lasUtilizacionesConNombreAutobus = lasUtilizaciones.Select(utilizacion => 
+            {
+                var autobus = losAutobuses.FirstOrDefault(a => a.Id == utilizacion.Autobus_id);
+                var cargador = losCargadores.FirstOrDefault(c => c.Id == utilizacion.Cargador_id);
+                utilizacion.Nombre_autobus = autobus?.Nombre_autobus ?? "";
+                utilizacion.Nombre_cargador = cargador?.Nombre_cargador ?? "";
+                return utilizacion;
+            })
+            .OrderBy(utilizacion => utilizacion.Autobus_id)
+            .ThenBy(utilizacion => utilizacion.Hora)
+            .ToList();
+
+            return lasUtilizacionesConNombreAutobus;
         }
 
         public async Task<UtilizacionCargador> GetByUtilizationAsync(string cargador_id, string autobus_id, int hora)

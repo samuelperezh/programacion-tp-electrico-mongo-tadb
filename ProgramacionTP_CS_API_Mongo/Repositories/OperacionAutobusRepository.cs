@@ -21,14 +21,22 @@ namespace ProgramacionTP_CS_API_Mongo.Repositories
         {
             var conexion = contextoDB.CreateConnection();
             var coleccionOperacionAutobuses = conexion.GetCollection<OperacionAutobus>(contextoDB.configuracionColecciones.ColeccionOperacionAutobuses);
+            var coleccionAutobuses = conexion.GetCollection<Autobus>(contextoDB.configuracionColecciones.ColeccionAutobuses);
 
-            var lasOperaciones = await coleccionOperacionAutobuses
-                .Find(_ => true)
-                .SortBy(operacion => operacion.Autobus_id)
-                .ThenBy(operacion => operacion.Hora)
-                .ToListAsync();
+            var lasOperaciones = await coleccionOperacionAutobuses.Find(_ => true).ToListAsync();
+            var losAutobuses = await coleccionAutobuses.Find(_ => true).ToListAsync();
 
-            return lasOperaciones;
+            var lasOperacionesConNombreAutobus = lasOperaciones.Select(operacion => 
+            {
+                var autobus = losAutobuses.FirstOrDefault(a => a.Id == operacion.Autobus_id);
+                operacion.Nombre_autobus = autobus?.Nombre_autobus ?? "";
+                return operacion;
+            })
+            .OrderBy(operacion => operacion.Autobus_id)
+            .ThenBy(operacion => operacion.Hora)
+            .ToList();
+
+            return lasOperacionesConNombreAutobus;
         }
 
         public async Task<OperacionAutobus> GetByOperationAsync(string autobus_id, int hora)

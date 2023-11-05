@@ -23,7 +23,7 @@ namespace ProgramacionTP_CS_API_Mongo.Repositories
             var conexion = contextoDB.CreateConnection();
 
             var coleccionHorarios = conexion.GetCollection<Horario>(contextoDB.configuracionColecciones.ColeccionHorarios);
-            var coleccionOperacionAutobuses = conexion.GetCollection<InformeOperacionAutobus>(contextoDB.configuracionColecciones.ColeccionOperacionAutobuses);
+            var coleccionOperacionAutobuses = conexion.GetCollection<OperacionAutobus>(contextoDB.configuracionColecciones.ColeccionOperacionAutobuses);
 
             var horarios = await coleccionHorarios.Distinct(h => h.Hora, new BsonDocument()).ToListAsync();
 
@@ -39,7 +39,7 @@ namespace ProgramacionTP_CS_API_Mongo.Repositories
         public async Task<InformeOperacionAutobus> GetInformeOperacionByIdAsync(int hora)
         {
             var conexion = contextoDB.CreateConnection();
-            var coleccionOperacionAutobuses = conexion.GetCollection<InformeOperacionAutobus>(contextoDB.configuracionColecciones.ColeccionOperacionAutobuses);
+            var coleccionOperacionAutobuses = conexion.GetCollection<OperacionAutobus>(contextoDB.configuracionColecciones.ColeccionOperacionAutobuses);
 
             var count = await coleccionOperacionAutobuses.CountDocumentsAsync(uc => uc.Hora == hora);
 

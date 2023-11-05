@@ -36,15 +36,29 @@ namespace ProgramacionTP_CS_API_Mongo.Repositories
                 informe.Hora = horario.Hora;
                 informe.Horario_pico = horario.Horario_pico;
 
-                var cargadoresUsados = await utilizacionCargadoresCollection.CountDocumentsAsync(new BsonDocument { { "hora", horario.Hora } });
+                var cargadoresUsados = await utilizacionCargadoresCollection.CountDocumentsAsync(c => c.Hora == horario.Hora);
                 var totalCargadores = await cargadoresCollection.CountDocumentsAsync(new BsonDocument());
 
-                informe.Porcentaje_cargadores_utilizados = (cargadoresUsados / totalCargadores) * 100;
-
-                var autobusesOperacion = await operacionAutobusesCollection.CountDocumentsAsync(new BsonDocument { { "hora", horario.Hora } });
+                var autobusesOperacion = await operacionAutobusesCollection.CountDocumentsAsync(o => o.Hora == horario.Hora);
                 var totalAutobuses = await autobusesCollection.CountDocumentsAsync(new BsonDocument());
 
-                informe.Porcentaje_autobuses_operacion = (autobusesOperacion / totalAutobuses) * 100;
+                if (totalCargadores > 0)
+                {
+                    informe.Porcentaje_cargadores_utilizados = (float)cargadoresUsados / (float)totalCargadores * 100;
+                }
+                else
+                {
+                    informe.Porcentaje_cargadores_utilizados = 0; // Evitar la división por cero
+                }
+
+                if (totalAutobuses > 0)
+                {
+                    informe.Porcentaje_autobuses_operacion = (float)autobusesOperacion / (float)totalAutobuses * 100;
+                }
+                else
+                {
+                    informe.Porcentaje_autobuses_operacion = 0; // Evitar la división por cero
+                }
 
                 informes.Add(informe);
             }
@@ -71,12 +85,26 @@ namespace ProgramacionTP_CS_API_Mongo.Repositories
             var cargadoresUsados = await utilizacionCargadoresCollection.CountDocumentsAsync(uc => uc.Hora == hora);
             var totalCargadores = await cargadoresCollection.CountDocumentsAsync(new BsonDocument());
 
-            informe.Porcentaje_cargadores_utilizados = (cargadoresUsados / totalCargadores) * 100;
-
             var autobusesOperacion = await operacionAutobusesCollection.CountDocumentsAsync(oa => oa.Hora == hora);
             var totalAutobuses = await autobusesCollection.CountDocumentsAsync(new BsonDocument());
 
-            informe.Porcentaje_autobuses_operacion = (autobusesOperacion / totalAutobuses) * 100;
+            if (totalCargadores > 0)
+            {
+                informe.Porcentaje_cargadores_utilizados = (float)cargadoresUsados / totalCargadores * 100;
+            }
+            else
+            {
+                informe.Porcentaje_cargadores_utilizados = 0; // Evitar la división por cero
+            }
+
+            if (totalAutobuses > 0)
+            {
+                informe.Porcentaje_autobuses_operacion = (float)autobusesOperacion / totalAutobuses * 100;
+            }
+            else
+            {
+                informe.Porcentaje_autobuses_operacion = 0; // Evitar la división por cero
+            }
 
             return informe;
         }
